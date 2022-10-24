@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/24 19:16:36 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:32:31 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ typedef struct	s_philo
 	int			sleep_time;
 	int			think_time;
 	int			time_to_die;
+	//mutex to point to something
 }t_philosopher;
 
 void *eating(void *arg)
 {
 	t_philosopher 	*philosopher;
-	struct timeval 	start, end, current;
+	struct timeval 	start, end;
+	static struct timeval current;
 	static int				i;
 
 	while (i < 3)
@@ -41,7 +43,7 @@ void *eating(void *arg)
 		usleep(philosopher->gorge_time);
 		gettimeofday(&end, NULL);
 		printf("Current time is: %ld\nActual time taken to for %s to eat is: %ld micro seconds\nSet time is: %d\n",\
-		(current.tv_sec + current.tv_usec),\
+		(current.tv_sec * 1000000 + current.tv_usec),\
 		(char *)philosopher->name,\
 		(end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec),\
 		philosopher->gorge_time);
@@ -55,6 +57,7 @@ void *sleeping(void *arg)
 {
 	t_philosopher 	*philosopher;
 	struct timeval 	start, end;
+	static struct timeval current;
 	static int				i;
 
 	while (i < 2)
@@ -64,7 +67,7 @@ void *sleeping(void *arg)
 		usleep(philosopher->sleep_time);
 		gettimeofday(&end, NULL);
 		printf("Current time is: %ld\nActual time taken to for %s to sleep is: %ld micro seconds\nSet time is: %d\n",\
-		(current.tv_sec + current.tv_usec),\
+		(current.tv_sec * 1000000 + current.tv_usec),\
 		(char *)philosopher->name,\
 		(end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec),\
 		philosopher->sleep_time);
