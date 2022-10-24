@@ -5,8 +5,10 @@
 int mails = 0;
 pthread_mutex_t mutex;
 
-void* routine() {
-    for (int i = 0; i < 10000000; i++) {
+void* routine()
+{
+    for (int i = 0; i < 10000000; i++) 
+	{
         pthread_mutex_lock(&mutex);
         mails++;
         pthread_mutex_unlock(&mutex);
@@ -14,6 +16,7 @@ void* routine() {
         // increment
         // write mails
     }
+	return (NULL);
 }
 
 int main(int argc, char* argv[]) {

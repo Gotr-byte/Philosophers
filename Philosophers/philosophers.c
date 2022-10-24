@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/24 13:49:44 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:16:36 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,54 @@ typedef struct	s_philo
 	pthread_t	pt_id;
 	char		*name;
 	int			gorge_time;
+	int			sleep_time;
+	int			think_time;
+	int			time_to_die;
 }t_philosopher;
 
-void *living(void *arg)
+void *eating(void *arg)
 {
-	t_philosopher *philosopher;
-	struct timeval start, end;
+	t_philosopher 	*philosopher;
+	struct timeval 	start, end, current;
+	static int				i;
 
-	philosopher = (t_philosopher *)arg;
-	gettimeofday(&start, NULL);
-	usleep(philosopher->gorge_time);
-	gettimeofday(&end, NULL);
-	printf("Actual time taken to for %s to eat is: %ld micro seconds\nSet time is: %d\n",\
-	(char *)philosopher->name,\
-	(end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec),\
-	philosopher->gorge_time);
+	while (i < 3)
+	{
+		philosopher = (t_philosopher *)arg;
+		gettimeofday(&start, NULL);
+		usleep(philosopher->gorge_time);
+		gettimeofday(&end, NULL);
+		printf("Current time is: %ld\nActual time taken to for %s to eat is: %ld micro seconds\nSet time is: %d\n",\
+		(current.tv_sec + current.tv_usec),\
+		(char *)philosopher->name,\
+		(end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec),\
+		philosopher->gorge_time);
+		i++;
+	}
+
+	return (arg);
+}
+
+void *sleeping(void *arg)
+{
+	t_philosopher 	*philosopher;
+	struct timeval 	start, end;
+	static int				i;
+
+	while (i < 2)
+	{
+		philosopher = (t_philosopher *)arg;
+		gettimeofday(&start, NULL);
+		usleep(philosopher->sleep_time);
+		gettimeofday(&end, NULL);
+		printf("Current time is: %ld\nActual time taken to for %s to sleep is: %ld micro seconds\nSet time is: %d\n",\
+		(current.tv_sec + current.tv_usec),\
+		(char *)philosopher->name,\
+		(end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec),\
+		philosopher->sleep_time);
+		i++;
+	}
+
 	return (arg);
 }
 
@@ -62,10 +95,11 @@ int main (void)
 	Konfucjusz->gorge_time = 100000;
 	Marek->gorge_time = 50000;
 	Platon->gorge_time = 77000;
+	Marek->sleep_time = 40000;
 
-	int result1 = pthread_create(&Konfucjusz->pt_id, NULL, living, Konfucjusz);
-	int result2 = pthread_create(&Marek->pt_id, NULL, living, Marek);
-	int result3 = pthread_create(&Platon->pt_id, NULL, living, Platon);
+	int result1 = pthread_create(&Konfucjusz->pt_id, NULL, eating, Konfucjusz);
+	int result2 = pthread_create(&Marek->pt_id, NULL, sleeping, Marek);
+	int result3 = pthread_create(&Platon->pt_id, NULL, eating, Platon);
 	
 	if (result1 || result2 || result3)
 	{
@@ -82,78 +116,5 @@ int main (void)
 		printf("The threads could not be joined.\n");
 		exit (2);
 	}
-	// pthread_exit(NULL);
 	return (0);
 }
-
-
-
-// void *living(void	*index)
-// {
-// 	int	eat_counter;
-// 	int	think_counter;
-// 	int	j;
-
-// 	printf("index value %d\n", *((int*)index));
-// 	think_counter = 0;
-// 	j = *((int*)index);
-// 	printf("j value equals: %d\n", *(int*)index);
-// 	eat_counter = 0;
-// 	if ((*((int*)index) == 0))
-// 	{
-// 	while (eat_counter < 5)
-// 	{
-// 		printf ("Philosopher %d is eating\n", j);
-// 		usleep(200000);
-// 		eat_counter++;
-// 	}
-// 	}
-// 	if ((*((int*)index) == 1))
-// 	{
-// 		printf("Philosopher %d is thinking\n", j);
-// 		usleep(500000);
-// 		think_counter++;
-// 	}
-// 	if ((*((int*)index) == 2))
-// 	{
-// 		printf("Philosopher %d is sleeping\n", j);
-// 		usleep(500000);
-// 		think_counter++;
-// 	}
-// 	return(NULL);
-// }
-
-
-// // void *thinking(void		*index)
-// // {
-// // 	int	think_counter;
-// // 	int	j;
-
-// // 	j = *((int*)index);
-// // 	think_counter = 0;
-// // 	while (think_counter < 10)
-// // 	{
-// // 		printf("Philosopher %d is thinking\n", j);
-// // 		usleep(500000);
-// // 		think_counter++;
-// // 	}
-// // }
-
-// // void	*sleeping()
-// // {
-// // 	printf("Philosopher is sleeping\n");
-// // }
-
-// int main()
-// {
-// 	pthread_t	philosopher;
-// 	int			i;
-
-// 	i = 0;
-// 	while (i < 3)
-// 	{
-// 		pthread_create(&philosopher, NULL, &living, (void*)&i);
-// 		i++;
-// 	}
-// 	pthread_join(philosopher, NULL);
-// }
