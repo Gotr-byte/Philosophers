@@ -6,14 +6,14 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:13:50 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/13 13:52:53 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:52:09 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
 #include <unistd.h>
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 
 void* myturn(void * arg)
 {

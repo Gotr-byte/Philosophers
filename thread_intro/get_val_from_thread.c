@@ -1,47 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first.c                                            :+:      :+:    :+:   */
+/*   get_val_from_thread.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 19:11:28 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/19 19:22:41 by pbiederm         ###   ########.fr       */
+/*   Created: 2022/10/20 10:10:11 by pbiederm          #+#    #+#             */
+/*   Updated: 2022/10/20 10:26:06 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <pthread.h>
+#include <time.h>
 
-void	*routine()
+void	*roll_dice()
 {
-	printf("Test from threads\n");
-	sleep(3);
-	printf("Ending thread\n");
-	return (NULL);
+	int value = (rand() % 6) + 1;
+	int	*result = malloc(sizeof(int));
+	*result = value;
+	printf("Thread result %p\n", result);
+	return ((void*)result);
 }
 
-int	main(int argc, char*argv[])
+int	main(int argc, char *argv[])
 {
-	pthread_t	t1;
-	pthread_t	t2;
-	if (pthread_create(&t1, NULL, &routine, NULL)!=0)
+	int	*res;
+	srand(time(NULL));
+	pthread_t th;
+
+	if(pthread_create(&th, NULL, &roll_dice, NULL) != 0)
 	{
 		return (1);
 	}
-	if (pthread_create(&t2, NULL, &routine, NULL) != 0)
+	if (pthread_join(th, (void	**)&res) != 0)
 	{
 		return (2);
 	}
-	if (pthread_join(t1, NULL) != 0)
-	{
-		return (3);
-	}
-	if (pthread_join(t2, NULL) != 0)
-	{
-		return (4);
-	}
+	printf("Main res %p\n", res);
+	printf("Result %d\n", *res);
+	free (res);
 	return (0);
 }

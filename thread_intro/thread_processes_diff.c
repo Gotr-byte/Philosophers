@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first.c                                            :+:      :+:    :+:   */
+/*   thread_processes_diff.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 19:11:28 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/19 19:22:41 by pbiederm         ###   ########.fr       */
+/*   Created: 2022/10/19 19:23:36 by pbiederm          #+#    #+#             */
+/*   Updated: 2022/10/20 11:52:54 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,38 @@
 #include <unistd.h>
 #include <pthread.h>
 
+int x = 2;
+
 void	*routine()
 {
-	printf("Test from threads\n");
-	sleep(3);
-	printf("Ending thread\n");
-	return (NULL);
+	x += 5;
+	sleep(2);
+	printf("Value of x in the first routine: %d \n", x);
+}
+void	*routine2()
+{
+	sleep(2);
+	printf("Value of x in the second routine: %d \n", x);
 }
 
-int	main(int argc, char*argv[])
+int	main(int argc, char	*argv[])
 {
 	pthread_t	t1;
 	pthread_t	t2;
-	if (pthread_create(&t1, NULL, &routine, NULL)!=0)
+
+	if (pthread_create(&t1, NULL, &routine, NULL))
 	{
 		return (1);
 	}
-	if (pthread_create(&t2, NULL, &routine, NULL) != 0)
+	if (pthread_create(&t2, NULL, &routine2, NULL))
 	{
 		return (2);
 	}
-	if (pthread_join(t1, NULL) != 0)
+	if (pthread_join(t1, NULL))
 	{
 		return (3);
 	}
-	if (pthread_join(t2, NULL) != 0)
+	if (pthread_join(t2, NULL))
 	{
 		return (4);
 	}

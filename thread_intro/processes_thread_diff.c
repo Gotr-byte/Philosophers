@@ -1,47 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first.c                                            :+:      :+:    :+:   */
+/*   processes_thread_diff.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 19:11:28 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/19 19:22:41 by pbiederm         ###   ########.fr       */
+/*   Created: 2022/10/19 19:26:25 by pbiederm          #+#    #+#             */
+/*   Updated: 2022/10/19 19:41:18 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <pthread.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
-void	*routine()
+int	main(int argc, char *argv[])
 {
-	printf("Test from threads\n");
-	sleep(3);
-	printf("Ending thread\n");
-	return (NULL);
-}
-
-int	main(int argc, char*argv[])
-{
-	pthread_t	t1;
-	pthread_t	t2;
-	if (pthread_create(&t1, NULL, &routine, NULL)!=0)
+	int x = 2;
+	int pid = fork();
+	if (pid == -1)
 	{
 		return (1);
 	}
-	if (pthread_create(&t2, NULL, &routine, NULL) != 0)
+	if (pid == 0)
 	{
-		return (2);
+		x++;
 	}
-	if (pthread_join(t1, NULL) != 0)
+	sleep(2);
+	printf("Value of x: %d\n", x);
+	printf("Process id %d\n", getpid());
+	if(pid != 0)
 	{
-		return (3);
-	}
-	if (pthread_join(t2, NULL) != 0)
-	{
-		return (4);
+		wait(NULL);
 	}
 	return (0);
 }
