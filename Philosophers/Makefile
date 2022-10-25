@@ -18,21 +18,18 @@ export IMG
 NAME := philosophers
 SRCFILES := philosophers.c
 
-CC = gcc
+CC = cc
 CFLAGS = -Wextra -Werror -Wall
 OBJS := $(SRCFILES:.c=.o) 
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -g $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME)
-	@echo $(GREEN) "$$IMG"
+	$(CC) -g $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME) -fsanitize=address
 clean:
 	rm -f $(OBJS)
-	make clean -C libft/
 fclean:	clean
 	rm -f $(NAME)
-	make fclean -C libft/
 	
 re:		fclean all
 
