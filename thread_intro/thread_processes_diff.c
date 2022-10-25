@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 19:23:36 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/20 11:52:54 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:09:08 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ int x = 2;
 
 void	*routine()
 {
-	x += 5;
 	sleep(2);
+	x += 5;
 	printf("Value of x in the first routine: %d \n", x);
 }
 void	*routine2()
 {
-	sleep(2);
 	printf("Value of x in the second routine: %d \n", x);
 }
 
