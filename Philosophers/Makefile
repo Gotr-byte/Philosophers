@@ -19,13 +19,13 @@ NAME := philosophers
 SRCFILES := philosophers.c
 
 CC = cc
-CFLAGS = -Wextra -Werror -Wall
+CFLAGS = -Wextra -Werror -Wall -pthread
 OBJS := $(SRCFILES:.c=.o) 
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -g $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME) -fsanitize=address
+	$(CC) -g $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME)
 clean:
 	rm -f $(OBJS)
 fclean:	clean
