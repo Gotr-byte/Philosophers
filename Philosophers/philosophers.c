@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/27 16:57:55 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:42:45 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,31 @@ void *eating(void *arg)
 	static int				i;
 
 	philosopher = (t_philosopher *)arg;
-	while (i < 3)
+	while (TRUE)
 	{
+		if (philosopher->time_to_die_curr == 0)
+		{
+			gettimeofday(&start, NULL);
+			printf("%ld %s has died\n", \
+			(start.tv_sec * 1000 + start.tv_usec / 1000),\
+			(char *)philosopher->name);
+			exit(0);
+		}
 		if (philosopher->sleep_time_curr > 0)
 		{
 			gettimeofday(&start, NULL);
 			usleep(philosopher->sleep_time_curr);
+			philosopher->time_to_die_curr = philosopher->time_to_die_curr - philosopher->sleep_time_curr;
 			philosopher->sleep_time_curr = 0;
-			gettimeofday(&end, NULL);
 			printf("%ld %s is sleeping\n", \
-			(start.tv_sec * 1000 + end.tv_usec / 1000),\
+			(start.tv_sec * 1000 + start.tv_usec / 1000),\
 			(char *)philosopher->name);
 		}
 		else
 		{
 			gettimeofday(&start, NULL);
 			printf("%ld %s is taking his time thinking\n", \
-			(start.tv_sec * 1000 + end.tv_usec / 1000),\
+			(start.tv_sec * 1000 + start.tv_usec / 1000),\
 			(char *)philosopher->name);
 		}
 		pthread_mutex_lock(&philosopher->next->fork);
@@ -58,7 +66,7 @@ void *eating(void *arg)
 		pthread_mutex_unlock(&philosopher->fork);
 		pthread_mutex_unlock(&philosopher->next->fork);
 		printf("%ld %s is eating\n",\
-		(start.tv_sec * 1000 + end.tv_usec / 1000),\
+		(start.tv_sec * 1000 + start.tv_usec / 1000),\
 		(char *)philosopher->name);
 	
 		i++;
@@ -98,6 +106,9 @@ int main (void)
 	Konfucjusz->sleep_time_set = 2000000;
 	Marek->sleep_time_set = 2000000;
 	Platon->sleep_time_set = 2000000;
+	Konfucjusz->time_to_die_curr = 10000000;
+	Marek->time_to_die_curr = 10000000;
+	Platon->time_to_die_curr = 10000000;
 
 	pthread_create(&Konfucjusz->pt_id, NULL, eating, Konfucjusz);
 	pthread_create(&Marek->pt_id, NULL, eating, Marek);
