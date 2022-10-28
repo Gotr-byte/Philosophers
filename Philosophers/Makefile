@@ -16,10 +16,11 @@ endef
 export IMG
 
 NAME := philosophers
-SRCFILES := philosophers.c
+SRCFILES := philosophers.c \
+			philosophers_utils.c
 
 CC = cc
-CFLAGS = -Wextra -Werror -Wall -pthread
+CFLAGS = -Wextra -Werror -Wall
 OBJS := $(SRCFILES:.c=.o) 
 
 all: $(NAME)
