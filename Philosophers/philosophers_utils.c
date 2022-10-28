@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/28 14:35:45 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:14:01 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,3 @@ void	*ft_calloc(size_t count, size_t size)
 	ft_bzero(point_to_calloc, t);
 	return (point_to_calloc);
 }
-
-// void	free_lst(t_philosopher	*head)
-// {
-// 	t_philosopher	*tmp;
-
-// 	while (head->indicator != 1)
-// 	{
-// 		tmp = *head;
-// 		*head = *head->next;
-// 		free(tmp);
-// 	}
-// 	*head = NULL;
-// }

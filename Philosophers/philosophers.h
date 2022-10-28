@@ -18,7 +18,9 @@ typedef struct	s_philo
 	int				die;
 	int				gorge_time;
 	int				sleep_time_set;
+	int				sleep_time_curr;
 	int				time_to_die_set;
+	int				time_to_die_curr;
 	int				indicator;
 	pthread_mutex_t	fork;
 	struct s_philo	*next;
