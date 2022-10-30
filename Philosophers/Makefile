@@ -17,7 +17,10 @@ export IMG
 
 NAME := philosophers
 SRCFILES := philosophers.c \
-			philosophers_utils.c
+			philosophers_utils.c \
+			create_list.c \
+			manage_threads.c \
+			release_list.c
 
 CC = cc
 CFLAGS = -Wextra -Werror -Wall
