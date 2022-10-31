@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/30 16:11:58 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:53:05 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int eat, int sleep, int times)
 	{
 		tmp->nb = content;
 		tmp->time_to_die_set = die;
-		tmp->gorge_time = eat;
-		tmp->sleep_time_set = sleep;
+		tmp->gorge_time = eat * 1000;
+		tmp->sleep_time_set = sleep * 1000;
 		tmp->eat_times = times;
 		tmp->next = NULL;
 	}
@@ -82,11 +82,13 @@ void	traverse_table(t_philosopher **lst, long curr_time)
 	while (last->indicator != LAST)
 	{
 		last->zero_time = curr_time;
+		last->last_eaten = curr_time;
 		printf("Number: %d\nIndicator: %d\nTime to die: %d\nTime to eat: %d\nTime to sleep: %d\nEat times: %d\nCurrent time: %ld\n",\
 		last->nb, last->indicator, last->time_to_die_set, last->gorge_time, last->sleep_time_set, last->eat_times, last->zero_time);
 		last = last->next;
 	}
 	last->zero_time = curr_time;
+	last->last_eaten = curr_time;
 	printf("Number: %d\nIndicator: %d\nTime to die: %d\nTime to eat: %d\nTime to sleep: %d\nEat times: %d\nCurrent time: %ld\n",\
 	last->nb, last->indicator, last->time_to_die_set, last->gorge_time, last->sleep_time_set, last->eat_times, last->zero_time);
 }

@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/30 16:10:52 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:30:22 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct	s_philo
 	int				time_to_die_set;
 	int				time_to_die_curr;
 	int				indicator;
+	long			last_eaten;
 	long			zero_time;
 	pthread_mutex_t	fork;
 	struct s_philo	*next;

@@ -6,116 +6,128 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/30 16:15:39 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:53:55 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosophers.h"
 
-//will need to replace calloc and atoi with ft_atoi
-//libeartor function from so_long
-//hard code for one philosopoher
-//how to avoid deadlock
-//manage delays of certain philosophers
-// void	timestamp()
-// the first one gets the fork (king of the table)
+long get_time(void)
+{
+	struct	timeval	tp;
+	long	miliseconds;
 
-// pthread_mutex_t eatex;
+	gettimeofday(&tp, NULL);
+	miliseconds = tp.tv_sec * 1000 + tp.tv_usec / 1000;
+	return (miliseconds);
+}
 
-const long int SECONDS_PER_DAY = 86400;
+// void	traverse_table(t_philosopher **lst, long curr_time)
+// {
+// 	t_philosopher	*last;
+
+// 	last = *lst;
+// 	while (last->indicator != LAST)
+// 	{
+// 		last->zero_time = curr_time;
+// 		printf("Number: %d\nIndicator: %d\nTime to die: %d\nTime to eat: %d\nTime to sleep: %d\nEat times: %d\nCurrent time: %ld\n",\
+// 		last->nb, last->indicator, last->time_to_die_set, last->gorge_time, last->sleep_time_set, last->eat_times, last->zero_time);
+// 		last = last->next;
+// 	}
+// 	last->zero_time = curr_time;
+// 	printf("Number: %d\nIndicator: %d\nTime to die: %d\nTime to eat: %d\nTime to sleep: %d\nEat times: %d\nCurrent time: %ld\n",\
+// 	last->nb, last->indicator, last->time_to_die_set, last->gorge_time, last->sleep_time_set, last->eat_times, last->zero_time);
+// }
+
+//maybe offset the squeker to the value of time to die
+// void	flip_table(t_philosopher* philosophers)
+// {
+
+// }
+// void	*grim_squeaker(void * arg)
+// {
+// 	t_philosopher	*check_hourglass;
+// 	int				kill_switch;
+// 	int				*send;
+
+// 	kill_switch = 13;
+// 	send = (int*)malloc(sizeof(int));
+// 	send = &kill_switch
+// 	check_hourglass = (t_philosopher*)arg;
+// 	while(TRUE)
+// 	{
+// 		if (get_time() - check_hourglass->last_eaten >= check_hourglass->time_to_die_set)
+// 			{
+// 				printf("%ld %d has died\n", \
+// 				get_time() - check_hourglass->zero_time,\
+// 				check_hourglass->nb);
+// 				return((void*)send);
+// 			}
+// 		check_hourglass = check_hourglass->next;
+// 	}
+// }
+
 
 void *eating(void *arg)
 {
 	t_philosopher 	*philosopher;
-	struct timeval 	start;
-	
+
 	philosopher = (t_philosopher *)arg;
 	philosopher->time_to_die_curr = philosopher->time_to_die_set;
-	// philosopher->sleep_time_curr = philosopher->sleep_time_set;
+	philosopher->last_eaten = get_time();
 	while (TRUE)
 	{
-		if (philosopher->time_to_die_curr == 0)
+		if(philosopher->nb % 2 != 0 && philosopher->sleep_time_curr == 0)
 		{
-			gettimeofday(&start, NULL);
-			printf("%ld %d has died\n", \
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
-			philosopher->nb);
-			pthread_exit(0);
-		}
-		else if(philosopher->nb == 1 && philosopher->sleep_time_curr == 0)
-		{
-			gettimeofday(&start, NULL);
 			pthread_mutex_lock(&philosopher->next->fork);
 			printf("%ld %d picked up a fork\n",\
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
 			pthread_mutex_lock(&philosopher->fork);
-			gettimeofday(&start, NULL);
 			printf("%ld %d picked up a fork\n",\
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
-			gettimeofday(&start, NULL);
 			philosopher->sleep_time_curr = philosopher->sleep_time_set;
 			printf("%ld %d is eating\n",\
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time() - philosopher->zero_time,\
 			philosopher->nb);
+			philosopher->last_eaten = get_time();
 			usleep(philosopher->gorge_time);
+			// while(philosopher->gorge_time--)
+			// 	usleep(1000);
 			pthread_mutex_unlock(&philosopher->fork);
 			pthread_mutex_unlock(&philosopher->next->fork);
 		}
-		else if(philosopher->nb != 1 && philosopher->sleep_time_curr == 0)
+		else if(philosopher->nb %2 == 0 && philosopher->sleep_time_curr == 0)
 		{
 			pthread_mutex_lock(&philosopher->fork);
-			gettimeofday(&start, NULL);
 			printf("%ld %d picked up a fork\n",\
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
 			pthread_mutex_lock(&philosopher->next->fork);
-			gettimeofday(&start, NULL);
 			printf("%ld %d picked up a fork\n",\
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
-			gettimeofday(&start, NULL);
 			philosopher->sleep_time_curr = philosopher->sleep_time_set;
 			printf("%ld %d is eating\n",\
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
-			usleep(philosopher->gorge_time);
+			philosopher->last_eaten = get_time();
+			usleep(philosopher->gorge_time);	
 			pthread_mutex_unlock(&philosopher->next->fork);
 			pthread_mutex_unlock(&philosopher->fork);
 		}
-		else if (philosopher->sleep_time_curr > 0)
+		if (philosopher->sleep_time_curr > 0)
 		{
-			gettimeofday(&start, NULL);
 			printf("%ld %d is sleeping\n", \
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
 			usleep(philosopher->sleep_time_curr);
-			philosopher->time_to_die_curr = philosopher->time_to_die_curr - philosopher->sleep_time_curr;
 			philosopher->sleep_time_curr = 0;
-			gettimeofday(&start, NULL);
 			printf("%ld %d is taking his time thinking\n", \
-			(start.tv_sec * 1000 + start.tv_usec / 1000) - philosopher->zero_time,\
+			get_time()- philosopher->zero_time,\
 			philosopher->nb);
 		}
-	
-		// pthread_mutex_lock(&philosopher->next->fork);
-		// printf("%ld %d picked up a fork\n",\
-		// (start.tv_sec * 1000 + start.tv_usec / 1000),\
-		// philosopher->nb);
-		// pthread_mutex_lock(&philosopher->fork);
-		// printf("%ld %d picked up a fork\n",\
-		// (start.tv_sec * 1000 + start.tv_usec / 1000),\
-		// philosopher->nb);
-		// gettimeofday(&start, NULL);
-		// usleep(philosopher->gorge_time);
-		// philosopher->sleep_time_curr = philosopher->sleep_time_set;
-		// gettimeofday(&end, NULL);
-		// pthread_mutex_unlock(&philosopher->fork);
-		// pthread_mutex_unlock(&philosopher->next->fork);
-		// printf("%ld %d is eating\n",\
-		// (start.tv_sec * 1000 + start.tv_usec / 1000),\
-		// philosopher->nb);
 	}
 	return (NULL);
 }
@@ -124,8 +136,11 @@ int main (int	ac, char **av)
 {
 	int				i;
 	t_philosopher	*table;
-	struct timeval	start;
-
+	// pthread_t		squeaker_id;
+	// int				*end;
+	
+	// struct timeval	start;
+	printf("%ld Start time\n", get_time());
 	if (ac == 1)
 		exit(2);
 	i = 1;
@@ -136,10 +151,29 @@ int main (int	ac, char **av)
 		i++;
 	}
 	last_point_first(&table);
-	gettimeofday(&start, NULL);
-	traverse_table(&table, (start.tv_sec * 1000 + start.tv_usec / 1000));
+	// gettimeofday(&start, NULL);
+	traverse_table(&table, get_time());
 	summon_mutexes(&table);
 	weave_threads(&table);
+	// pthread_create(&squeaker_id, NULL, grim_squeaker, table);
+	// pthread_join(squeaker_id, (void**)&end);
+	// usleep(300);
+	while(TRUE)
+	{
+		if (get_time() - table->last_eaten >= table->time_to_die_set)
+			{
+				printf("last eaten %ld\n", table->last_eaten);
+				printf("time to die set %d\n", table->time_to_die_set);
+				printf("get_time() - table->last_eaten: %ld\n ", get_time() - table->last_eaten);
+				printf("%ld %d has died\n", \
+				get_time() - table->zero_time,\
+				table->nb);
+				exit(0);
+			}
+		// usleep(200000);
+		table = table->next;
+	}
+
 	join_threads(&table);
 	expell_mutexes(&table);
 	release_list(&table);
