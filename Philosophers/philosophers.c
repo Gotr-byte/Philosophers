@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/31 16:53:55 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:12:58 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,101 +22,59 @@ long get_time(void)
 	return (miliseconds);
 }
 
-// void	traverse_table(t_philosopher **lst, long curr_time)
-// {
-// 	t_philosopher	*last;
-
-// 	last = *lst;
-// 	while (last->indicator != LAST)
-// 	{
-// 		last->zero_time = curr_time;
-// 		printf("Number: %d\nIndicator: %d\nTime to die: %d\nTime to eat: %d\nTime to sleep: %d\nEat times: %d\nCurrent time: %ld\n",\
-// 		last->nb, last->indicator, last->time_to_die_set, last->gorge_time, last->sleep_time_set, last->eat_times, last->zero_time);
-// 		last = last->next;
-// 	}
-// 	last->zero_time = curr_time;
-// 	printf("Number: %d\nIndicator: %d\nTime to die: %d\nTime to eat: %d\nTime to sleep: %d\nEat times: %d\nCurrent time: %ld\n",\
-// 	last->nb, last->indicator, last->time_to_die_set, last->gorge_time, last->sleep_time_set, last->eat_times, last->zero_time);
-// }
-
-//maybe offset the squeker to the value of time to die
-// void	flip_table(t_philosopher* philosophers)
-// {
-
-// }
-// void	*grim_squeaker(void * arg)
-// {
-// 	t_philosopher	*check_hourglass;
-// 	int				kill_switch;
-// 	int				*send;
-
-// 	kill_switch = 13;
-// 	send = (int*)malloc(sizeof(int));
-// 	send = &kill_switch
-// 	check_hourglass = (t_philosopher*)arg;
-// 	while(TRUE)
-// 	{
-// 		if (get_time() - check_hourglass->last_eaten >= check_hourglass->time_to_die_set)
-// 			{
-// 				printf("%ld %d has died\n", \
-// 				get_time() - check_hourglass->zero_time,\
-// 				check_hourglass->nb);
-// 				return((void*)send);
-// 			}
-// 		check_hourglass = check_hourglass->next;
-// 	}
-// }
-
-
 void *eating(void *arg)
 {
 	t_philosopher 	*philosopher;
 
 	philosopher = (t_philosopher *)arg;
-	philosopher->time_to_die_curr = philosopher->time_to_die_set;
-	philosopher->last_eaten = get_time();
 	while (TRUE)
 	{
-		if(philosopher->nb % 2 != 0 && philosopher->sleep_time_curr == 0)
-		{
-			pthread_mutex_lock(&philosopher->next->fork);
-			printf("%ld %d picked up a fork\n",\
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
-			pthread_mutex_lock(&philosopher->fork);
-			printf("%ld %d picked up a fork\n",\
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
-			philosopher->sleep_time_curr = philosopher->sleep_time_set;
-			printf("%ld %d is eating\n",\
-			get_time() - philosopher->zero_time,\
-			philosopher->nb);
-			philosopher->last_eaten = get_time();
-			usleep(philosopher->gorge_time);
-			// while(philosopher->gorge_time--)
-			// 	usleep(1000);
-			pthread_mutex_unlock(&philosopher->fork);
-			pthread_mutex_unlock(&philosopher->next->fork);
-		}
-		else if(philosopher->nb %2 == 0 && philosopher->sleep_time_curr == 0)
-		{
-			pthread_mutex_lock(&philosopher->fork);
-			printf("%ld %d picked up a fork\n",\
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
-			pthread_mutex_lock(&philosopher->next->fork);
-			printf("%ld %d picked up a fork\n",\
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
-			philosopher->sleep_time_curr = philosopher->sleep_time_set;
-			printf("%ld %d is eating\n",\
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
-			philosopher->last_eaten = get_time();
-			usleep(philosopher->gorge_time);	
-			pthread_mutex_unlock(&philosopher->next->fork);
-			pthread_mutex_unlock(&philosopher->fork);
-		}
+		// if(philosopher->nb % 2 != 0 && philosopher->sleep_time_curr == 0)
+		// {
+		// 	pthread_mutex_lock(&philosopher->next->fork);
+		// 	printf("%ld %d picked up a fork\n",\
+		// 	get_time()- philosopher->zero_time,\
+		// 	philosopher->nb);
+		// 	pthread_mutex_lock(&philosopher->fork);
+		// 	printf("%ld %d picked up a fork\n",\
+		// 	get_time()- philosopher->zero_time,\
+		// 	philosopher->nb);
+		// 	philosopher->sleep_time_curr = philosopher->sleep_time_set;
+		// 	printf("%ld %d is eating\n",\
+		// 	get_time() - philosopher->zero_time,\
+		// 	philosopher->nb);
+		// 	philosopher->last_eaten = get_time();
+		// 	usleep(philosopher->gorge_time);
+		// 	while(philosopher->gorge_time--)
+		// 		usleep(1000);
+		// 	pthread_mutex_unlock(&philosopher->fork);
+		// 	pthread_mutex_unlock(&philosopher->next->fork);
+		// }
+		// if(philosopher->nb %2 == 0 && philosopher->sleep_time_curr == 0)
+		// printf("last eaten %ld\n", philosopher->last_eaten);
+		// printf("time to die set %d\n", philosopher->time_to_die_set);
+		// printf("get_time() - table->last_eaten: %ld\n ", get_time() - philosopher->last_eaten);
+		// if(philosopher->sleep_time_curr == 0)
+		// {
+		// pthread_mutex_lock(&philosopher->next->fork);
+		pthread_mutex_lock(&philosopher->fork);
+		printf("%ld %d picked up a fork\n",\
+		get_time()- philosopher->zero_time,\
+		philosopher->nb);
+		// pthread_mutex_unlock(&philosopher->next->fork);
+		pthread_mutex_lock(&philosopher->next->fork);
+		printf("%ld %d picked up a fork\n",\
+		get_time()- philosopher->zero_time,\
+		philosopher->nb);
+		philosopher->sleep_time_curr = philosopher->sleep_time_set;
+		printf("%ld %d is eating\n",\
+		get_time()- philosopher->zero_time,\
+		philosopher->nb);
+		philosopher->last_eaten = get_time();
+		usleep(philosopher->gorge_time);
+		pthread_mutex_unlock(&philosopher->next->fork);
+		pthread_mutex_unlock(&philosopher->fork);
+		// }
 		if (philosopher->sleep_time_curr > 0)
 		{
 			printf("%ld %d is sleeping\n", \
@@ -162,9 +120,9 @@ int main (int	ac, char **av)
 	{
 		if (get_time() - table->last_eaten >= table->time_to_die_set)
 			{
-				printf("last eaten %ld\n", table->last_eaten);
-				printf("time to die set %d\n", table->time_to_die_set);
-				printf("get_time() - table->last_eaten: %ld\n ", get_time() - table->last_eaten);
+				// printf("last eaten %ld\n", table->last_eaten);
+				// printf("time to die set %d\n", table->time_to_die_set);
+				// printf("get_time() - table->last_eaten: %ld\n ", get_time() - table->last_eaten);
 				printf("%ld %d has died\n", \
 				get_time() - table->zero_time,\
 				table->nb);

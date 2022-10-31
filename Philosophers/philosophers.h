@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/31 14:30:22 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:23:19 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ typedef struct	s_philo
 	pthread_t		pt_id;
 	int				nb;
 	int				eat_times;
-	int				die;
 	int				gorge_time;
 	int				sleep_time_set;
 	int				sleep_time_curr;
 	int				time_to_die_set;
-	int				time_to_die_curr;
 	int				indicator;
 	long			last_eaten;
 	long			zero_time;
