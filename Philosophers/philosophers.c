@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/31 19:12:58 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:43:42 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,12 @@ void *eating(void *arg)
 	philosopher = (t_philosopher *)arg;
 	while (TRUE)
 	{
-		// if(philosopher->nb % 2 != 0 && philosopher->sleep_time_curr == 0)
-		// {
-		// 	pthread_mutex_lock(&philosopher->next->fork);
-		// 	printf("%ld %d picked up a fork\n",\
-		// 	get_time()- philosopher->zero_time,\
-		// 	philosopher->nb);
-		// 	pthread_mutex_lock(&philosopher->fork);
-		// 	printf("%ld %d picked up a fork\n",\
-		// 	get_time()- philosopher->zero_time,\
-		// 	philosopher->nb);
-		// 	philosopher->sleep_time_curr = philosopher->sleep_time_set;
-		// 	printf("%ld %d is eating\n",\
-		// 	get_time() - philosopher->zero_time,\
-		// 	philosopher->nb);
-		// 	philosopher->last_eaten = get_time();
-		// 	usleep(philosopher->gorge_time);
-		// 	while(philosopher->gorge_time--)
-		// 		usleep(1000);
-		// 	pthread_mutex_unlock(&philosopher->fork);
-		// 	pthread_mutex_unlock(&philosopher->next->fork);
-		// }
-		// if(philosopher->nb %2 == 0 && philosopher->sleep_time_curr == 0)
-		// printf("last eaten %ld\n", philosopher->last_eaten);
-		// printf("time to die set %d\n", philosopher->time_to_die_set);
-		// printf("get_time() - table->last_eaten: %ld\n ", get_time() - philosopher->last_eaten);
-		// if(philosopher->sleep_time_curr == 0)
-		// {
-		// pthread_mutex_lock(&philosopher->next->fork);
+		if (philosopher->sleep_time_curr == 0)
+		{
 		pthread_mutex_lock(&philosopher->fork);
 		printf("%ld %d picked up a fork\n",\
 		get_time()- philosopher->zero_time,\
 		philosopher->nb);
-		// pthread_mutex_unlock(&philosopher->next->fork);
 		pthread_mutex_lock(&philosopher->next->fork);
 		printf("%ld %d picked up a fork\n",\
 		get_time()- philosopher->zero_time,\
@@ -74,17 +47,17 @@ void *eating(void *arg)
 		usleep(philosopher->gorge_time);
 		pthread_mutex_unlock(&philosopher->next->fork);
 		pthread_mutex_unlock(&philosopher->fork);
-		// }
+		}
 		if (philosopher->sleep_time_curr > 0)
 		{
-			printf("%ld %d is sleeping\n", \
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
-			usleep(philosopher->sleep_time_curr);
-			philosopher->sleep_time_curr = 0;
-			printf("%ld %d is taking his time thinking\n", \
-			get_time()- philosopher->zero_time,\
-			philosopher->nb);
+		printf("%ld %d is sleeping\n", \
+		get_time()- philosopher->zero_time,\
+		philosopher->nb);
+		usleep(philosopher->sleep_time_curr);
+		philosopher->sleep_time_curr = 0;
+		printf("%ld %d is taking his time thinking\n", \
+		get_time()- philosopher->zero_time,\
+		philosopher->nb);
 		}
 	}
 	return (NULL);
