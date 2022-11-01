@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/31 19:17:24 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/01 09:09:15 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	weave_threads(t_philosopher **lst)
 	last = *lst;
 	while (last->indicator != LAST)
 	{
-		if(last->nb % 2 == 0)
+		if (last->nb % 2 == 0)
 			usleep(50);
 		pthread_create(&last->pt_id, NULL, eating, last);
 		last = last->next;
 	}
-	if(last->nb % 2 == 0)
+	if (last->nb % 2 == 0)
 			usleep(50);
 	pthread_create(&last->pt_id, NULL, eating, last);
 }
