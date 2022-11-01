@@ -29,8 +29,7 @@ OBJS := $(SRCFILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -g $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME)
-clean:
+	$(CC) $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME) 
 	rm -f $(OBJS)
 fclean:	clean
 	rm -f $(NAME)

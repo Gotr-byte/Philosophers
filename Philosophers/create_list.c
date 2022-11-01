@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/31 18:52:02 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:54:16 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	local_lstadd_back(t_philosopher **lst, t_philosopher *new)
 }
 
 t_philosopher	*ft_lstnew_int(int content, int die, \
-int eat, int sleep, int times)
+int eat, int sleep)
 {
 	t_philosopher	*tmp;
 
@@ -68,7 +68,7 @@ int eat, int sleep, int times)
 		tmp->time_to_die_set = die;
 		tmp->gorge_time = eat * 1000;
 		tmp->sleep_time_set = sleep * 1000;
-		tmp->eat_times = times;
+		tmp->eat_times = 0;
 		tmp->next = NULL;
 	}
 	return (tmp);
