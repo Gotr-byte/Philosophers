@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/01 16:38:34 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/02 10:33:00 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_philosopher	*ft_lstnew_int(int content, int die, \
 int eat, int sleep)
 {
 	t_philosopher	*tmp;
-	t_eatex			*fork;
+	// t_eatex			*fork;
 
 	tmp = (t_philosopher *)ft_calloc(1, sizeof(t_philosopher));
 	if (!tmp)
@@ -70,7 +70,7 @@ int eat, int sleep)
 		tmp->gorge_time = eat * 1000;
 		tmp->sleep_time_set = sleep * 1000;
 		tmp->eat_times = 0;
-		tmp->eatex = fork;
+		// tmp->eatex = fork;
 		tmp->next = NULL;
 
 	}

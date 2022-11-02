@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/01 16:32:38 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/02 10:38:46 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ void	hourglass(t_philosopher **table)
 	pthread_mutex_unlock(&sands->test);
 	// usleep (5);
 }
+
+//waiter function placeholder
+// void	*waiter(void *)
 
 int	main(int ac, char **av)
 {

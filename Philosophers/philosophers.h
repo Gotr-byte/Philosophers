@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/02 09:45:52 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/02 10:31:59 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@
 
 typedef struct s_philo
 {
-	pthread_t		pt_id;
-	int				nb;
-	int				gorge_time;
-	int				sleep_time_set;
-	int				sleep_time_curr;
-	int				time_to_die_set;
-	int				indicator;
-	long			last_eaten;
-	long			zero_time;
-	int				eat_times;
-	t_eatex			*eatex;
-	// pthread_mutex_t	test;
-	// pthread_mutex_t	fork;
-	struct s_philo	*next;
+	pthread_t			pt_id;
+	int					nb;
+	int					gorge_time;
+	int					sleep_time_set;
+	int					sleep_time_curr;
+	int					time_to_die_set;
+	int					indicator;
+	long				last_eaten;
+	long				zero_time;
+	int					eat_times;
+	// t_eatex				*eatex;
+	pthread_mutex_t		test;	
+	pthread_mutex_t		fork;
+	struct s_philo		*next;
 }t_philosopher;
 
 // typedef struct s_eatex
