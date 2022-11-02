@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/01 16:09:06 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:32:38 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	eating(t_philosopher **arg)
 	philosopher->nb);
 	pthread_mutex_lock(&philosopher->next->fork);
 	get_second_fork = get_time();
+	pthread_mutex_lock(&philosopher->test);
 	philosopher->last_eaten = get_second_fork;
+	pthread_mutex_unlock(&philosopher->test);
 	philosopher->eat_times++;
 	mahlzeit = get_second_fork - philosopher->zero_time;
 	printf("%ld %d picked up a fork\n%ld %d is eating\n", \
@@ -90,6 +92,7 @@ void	hourglass(t_philosopher **table)
 
 	k = 0;
 	sands = *table;
+	pthread_mutex_lock(&sands->test);
 	if (get_time() - sands->last_eaten >= sands->time_to_die_set)
 	{
 		printf("%ld %d has died\n", \
@@ -100,7 +103,8 @@ void	hourglass(t_philosopher **table)
 		exit(0);
 	}
 	sands = sands->next;
-	usleep (5);
+	pthread_mutex_unlock(&sands->test);
+	// usleep (5);
 }
 
 int	main(int ac, char **av)
@@ -109,6 +113,7 @@ int	main(int ac, char **av)
 	int				j;
 	t_philosopher	*table;
 
+	table = NULL;
 	printf("%ld Start time\n", get_time());
 	if (ac == 1)
 		exit(2);

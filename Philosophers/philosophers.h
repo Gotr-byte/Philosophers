@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/01 13:54:25 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/11/02 09:45:52 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,17 @@ typedef struct s_philo
 	long			last_eaten;
 	long			zero_time;
 	int				eat_times;
-	pthread_mutex_t	fork;
+	t_eatex			*eatex;
+	// pthread_mutex_t	test;
+	// pthread_mutex_t	fork;
 	struct s_philo	*next;
 }t_philosopher;
+
+// typedef struct s_eatex
+// {
+// 	pthread_mutex_t	test;
+// 	pthread_mutex_t	fork;
+// }t_eatex
 
 void			free_lst(t_philosopher	*head);
 int				ft_atoi(const char *str);
