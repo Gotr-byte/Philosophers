@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/02 10:31:59 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/20 17:39:44 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdlib.h>
+# include <stdint.h>
 
 # define TRUE 1
 # define NOT_LAST 1
@@ -36,8 +37,9 @@ typedef struct s_philo
 	long				zero_time;
 	int					eat_times;
 	// t_eatex				*eatex;
-	pthread_mutex_t		test;	
+	// pthread_mutex_t		test;	
 	pthread_mutex_t		fork;
+	// struct t_eatex		*eatex;
 	struct s_philo		*next;
 }t_philosopher;
 

@@ -6,11 +6,14 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/02 10:38:46 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/25 14:10:31 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//needs a function to check if everyone has eaten
+/*
+Needs a function to check if everyone has eaten.
+
+*/
 #include "./philosophers.h"
 
 long	get_time(void)
@@ -31,17 +34,17 @@ void	eating(t_philosopher **arg)
 
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->fork);
-	printf("%ld %d picked up a fork\n", \
+	printf("%ld %d has taken a fork\n", \
 	get_time() - philosopher->zero_time, \
 	philosopher->nb);
 	pthread_mutex_lock(&philosopher->next->fork);
 	get_second_fork = get_time();
-	pthread_mutex_lock(&philosopher->test);
+	// pthread_mutex_lock(&philosopher->test);
 	philosopher->last_eaten = get_second_fork;
-	pthread_mutex_unlock(&philosopher->test);
+	// pthread_mutex_unlock(&philosopher->test);
 	philosopher->eat_times++;
 	mahlzeit = get_second_fork - philosopher->zero_time;
-	printf("%ld %d picked up a fork\n%ld %d is eating\n", \
+	printf("%ld %d has taken a fork\n%ld %d is eating\n", \
 	mahlzeit, philosopher->nb, mahlzeit, philosopher->nb);
 	philosopher->sleep_time_curr = philosopher->sleep_time_set;
 	usleep(philosopher->gorge_time);
@@ -66,7 +69,7 @@ void	thinking(t_philosopher **arg)
 	t_philosopher	*philosopher;
 
 	philosopher = *arg;
-	printf("%ld %d is taking his time thinking\n", \
+	printf("%ld %d is thinking\n", \
 	get_time() - philosopher->zero_time, \
 	philosopher->nb);
 }
@@ -88,11 +91,11 @@ void	*living(void *arg)
 void	hourglass(t_philosopher **table)
 {
 	t_philosopher	*sands;
-	int				k;
 
-	k = 0;
 	sands = *table;
-	pthread_mutex_lock(&sands->test);
+	// if (get_time() % 100 == 0)
+	// 	printf("get_time() - sands->last_eaten : sands->time_to_die_set ==> [%ld] : [%d]\n", (get_time() - sands->last_eaten), sands->time_to_die_set);
+	// exit(0);
 	if (get_time() - sands->last_eaten >= sands->time_to_die_set)
 	{
 		printf("%ld %d has died\n", \
@@ -103,8 +106,7 @@ void	hourglass(t_philosopher **table)
 		exit(0);
 	}
 	sands = sands->next;
-	pthread_mutex_unlock(&sands->test);
-	// usleep (5);
+	usleep (1);
 }
 
 //waiter function placeholder
@@ -113,7 +115,7 @@ void	hourglass(t_philosopher **table)
 int	main(int ac, char **av)
 {
 	int				i;
-	int				j;
+	// int				j;
 	t_philosopher	*table;
 
 	table = NULL;
@@ -127,7 +129,6 @@ int	main(int ac, char **av)
 		ft_atoi(av[3]), ft_atoi(av[4])));
 		i++;
 	}
-	j = ft_atoi(av[5]);
 	last_point_first(&table);
 	traverse_table(&table, get_time());
 	summon_mutexes(&table);

@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/11/01 16:28:16 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/25 16:54:46 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	weave_threads(t_philosopher **lst)
 		if (last->nb % 2 == 0)
 			usleep(50);
 		pthread_create(&last->pt_id, NULL, living, last);
+		// pthread_create(&last->pt_id, NULL, hourglass, last);
 		last = last->next;
 	}
 	if (last->nb % 2 == 0)
@@ -63,7 +64,7 @@ void	summon_mutexes(t_philosopher **lst)
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_init(&(last->fork), NULL);
-		pthread_mutex_init(&(last->test), NULL);
+		// pthread_mutex_init(&(last->test), NULL);
 		last = last->next;
 	}
 	pthread_mutex_init(&(last->fork), NULL);
@@ -77,7 +78,7 @@ void	expell_mutexes(t_philosopher **lst)
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_destroy(&(last->fork));
-		pthread_mutex_destroy(&(last->test));
+		// pthread_mutex_destroy(&(last->test));
 		last = last->next;
 	}
 	pthread_mutex_destroy(&(last->fork));
