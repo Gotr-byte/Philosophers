@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/25 16:54:46 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/28 13:56:52 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ void	summon_mutexes(t_philosopher **lst)
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_init(&(last->fork), NULL);
-		// pthread_mutex_init(&(last->test), NULL);
+		pthread_mutex_init(&(last->is_dead), NULL);
 		last = last->next;
 	}
+	pthread_mutex_init(&(last->is_dead), NULL);
 	pthread_mutex_init(&(last->fork), NULL);
 }
 
@@ -78,8 +79,9 @@ void	expell_mutexes(t_philosopher **lst)
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_destroy(&(last->fork));
-		// pthread_mutex_destroy(&(last->test));
+		pthread_mutex_destroy(&(last->is_dead));
 		last = last->next;
 	}
 	pthread_mutex_destroy(&(last->fork));
+	pthread_mutex_destroy(&(last->is_dead));
 }

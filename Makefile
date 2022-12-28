@@ -23,9 +23,9 @@ SRCFILES := philosophers.c \
 			release_list.c
 
 CC = cc
-# CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
+CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
 # CFLAGS = -Wextra -Werror -Wall -g -pthread
-CFLAGS = -Wextra -Werror -Wall -pthread
+# CFLAGS = -Wextra -Werror -Wall -pthread
 OBJS := $(SRCFILES:.c=.o) 
 
 all: $(NAME)
