@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/28 13:59:39 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/28 20:43:51 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # define TRUE 1
 # define NOT_LAST 1
 # define LAST 0
+# define END 0
+# define NOT_END 1
+
+typedef struct s_hourglass
+{
+	int	end;
+}t_hourglass;
 
 typedef struct s_philo
 {
@@ -40,13 +47,15 @@ typedef struct s_philo
 	pthread_mutex_t		is_dead;	
 	pthread_mutex_t		fork;
 	struct s_philo		*next;
+	struct s_hourglass	*hourglass;
 }t_philosopher;
+
 
 
 void			free_lst(t_philosopher	*head);
 int				ft_atoi(const char *str);
 void			*ft_calloc(size_t count, size_t size);
-t_philosopher	*ft_lstnew_int(int content, int die, int eat, int sleep);
+t_philosopher	*ft_lstnew_int(int content, int die, int eat, int sleep, t_hourglass **hourglass_recieve);
 void			local_lstadd_back(t_philosopher **lst, t_philosopher *new);
 void			last_point_first(t_philosopher **lst);
 void			traverse_table(t_philosopher **lst, long curr_time);

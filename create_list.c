@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/28 17:24:11 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/28 20:32:31 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void	local_lstadd_back(t_philosopher **lst, t_philosopher *new)
 }
 
 t_philosopher	*ft_lstnew_int(int content, int die, \
-int eat, int sleep)
+int eat, int sleep, t_hourglass **hourglass_recieve)
 {
 	t_philosopher	*tmp;
+	t_hourglass		*point_to_hourglass;
 	// t_eatex			*fork;
 
+	point_to_hourglass = *hourglass_recieve;
 	tmp = (t_philosopher *)ft_calloc(1, sizeof(t_philosopher));
 	if (!tmp)
 		return (NULL);
@@ -72,6 +74,7 @@ int eat, int sleep)
 		tmp->eat_times = 0;
 		// tmp->eatex = fork;
 		tmp->next = NULL;
+		tmp->hourglass = point_to_hourglass;
 
 	}
 	return (tmp);
