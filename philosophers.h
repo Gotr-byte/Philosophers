@@ -37,7 +37,7 @@ typedef struct s_philo
 	long				zero_time;
 	int					eat_times;
 	// t_eatex				*eatex;
-	// pthread_mutex_t		test;	
+	pthread_mutex_t		is_dead;	
 	pthread_mutex_t		fork;
 	// struct t_eatex		*eatex;
 	struct s_philo		*next;

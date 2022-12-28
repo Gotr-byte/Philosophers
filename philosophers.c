@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/25 14:10:31 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/28 13:33:59 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ void	hourglass(t_philosopher **table)
 	t_philosopher	*sands;
 
 	sands = *table;
-	// if (get_time() % 100 == 0)
-	// 	printf("get_time() - sands->last_eaten : sands->time_to_die_set ==> [%ld] : [%d]\n", (get_time() - sands->last_eaten), sands->time_to_die_set);
-	// exit(0);
 	if (get_time() - sands->last_eaten >= sands->time_to_die_set)
 	{
 		printf("%ld %d has died\n", \
@@ -115,7 +112,6 @@ void	hourglass(t_philosopher **table)
 int	main(int ac, char **av)
 {
 	int				i;
-	// int				j;
 	t_philosopher	*table;
 
 	table = NULL;
