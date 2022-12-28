@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/28 15:59:48 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/28 17:28:06 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void	hourglass(t_philosopher **table)
 	// pthread_mutex_lock(&sands->is_dead);
 	if (get_time() - sands->last_eaten >= sands->time_to_die_set)
 	{
+		printf("sands->hourglass_zero_time: %ld\n", sands->hourglass_zero_time);
+		printf("get_time: %ld\n", get_time());
+		printf("get_time() - sands->hourglass_zero_time: %ld\n",get_time() - sands->hourglass_zero_time);
 		printf("%ld %d has died\n", \
 		get_time() - sands->hourglass_zero_time, \
 		sands->nb);
@@ -116,7 +119,7 @@ void	hourglass(t_philosopher **table)
 		exit(0);
 	}
 	sands = sands->next;
-	usleep (1000);
+	usleep (100);
 	// pthread_mutex_unlock(&sands->is_dead);
 }
 
@@ -143,8 +146,8 @@ int	main(int ac, char **av)
 	traverse_table(&table, get_time());
 	summon_mutexes(&table);
 	weave_threads(&table);
-	// while (TRUE)
-	// 	hourglass(&table);
+	while (TRUE)
+		hourglass(&table);
 	join_threads(&table);
 	expell_mutexes(&table);
 	release_list(&table);
