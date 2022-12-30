@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/29 18:38:42 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:11:42 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_philo
 	long				zero_time;
 	long				hourglass_zero_time;
 	int					eat_times;
-	pthread_mutex_t		is_dead;	
+	pthread_mutex_t		last_eaten_mutex;	
 	pthread_mutex_t		fork;
 	pthread_mutex_t		end;
 	struct s_philo		*next;
@@ -67,4 +67,5 @@ void			weave_threads(t_philosopher **lst);
 void			release_list(t_philosopher **lst);
 void			*living(void *arg);
 void			detach_threads(t_philosopher **lst);
+long			get_time(void);
 #endif

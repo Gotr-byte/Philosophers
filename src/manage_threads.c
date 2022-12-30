@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/29 18:24:10 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:40:37 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ void	summon_mutexes(t_philosopher **lst)
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_init(&(last->fork), NULL);
-		pthread_mutex_init(&(last->is_dead), NULL);
+		pthread_mutex_init(&(last->last_eaten_mutex), NULL);
+		pthread_mutex_init(&(last->end), NULL);
 		last = last->next;
 	}
-	pthread_mutex_init(&(last->is_dead), NULL);
+	pthread_mutex_init(&(last->last_eaten_mutex), NULL);
 	pthread_mutex_init(&(last->fork), NULL);
+	pthread_mutex_init(&(last->end), NULL);
 }
 
 void	expell_mutexes(t_philosopher **lst)
@@ -78,9 +80,9 @@ void	expell_mutexes(t_philosopher **lst)
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_destroy(&(last->fork));
-		pthread_mutex_destroy(&(last->is_dead));
+		pthread_mutex_destroy(&(last->last_eaten_mutex));
 		last = last->next;
 	}
 	pthread_mutex_destroy(&(last->fork));
-	pthread_mutex_destroy(&(last->is_dead));
+	pthread_mutex_destroy(&(last->last_eaten_mutex));
 }
