@@ -6,11 +6,11 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/10/28 16:14:01 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:24:13 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 static int	ft_wh_space(char *str)
 {

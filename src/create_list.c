@@ -6,11 +6,11 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/28 20:32:31 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/29 19:57:03 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 void	last_point_first(t_philosopher **lst)
 {
@@ -53,11 +53,10 @@ void	local_lstadd_back(t_philosopher **lst, t_philosopher *new)
 }
 
 t_philosopher	*ft_lstnew_int(int content, int die, \
-int eat, int sleep, t_hourglass **hourglass_recieve)
+int eat, int sleep, int times_eaten, t_hourglass **hourglass_recieve)
 {
 	t_philosopher	*tmp;
 	t_hourglass		*point_to_hourglass;
-	// t_eatex			*fork;
 
 	point_to_hourglass = *hourglass_recieve;
 	tmp = (t_philosopher *)ft_calloc(1, sizeof(t_philosopher));
@@ -71,11 +70,9 @@ int eat, int sleep, t_hourglass **hourglass_recieve)
 		tmp->time_to_die_set = die;
 		tmp->gorge_time = eat;
 		tmp->sleep_time_set = sleep;
-		tmp->eat_times = 0;
-		// tmp->eatex = fork;
+		tmp->eat_times = times_eaten;
 		tmp->next = NULL;
 		tmp->hourglass = point_to_hourglass;
-
 	}
 	return (tmp);
 }

@@ -6,11 +6,11 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/28 17:21:02 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:24:10 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../includes/philosophers.h"
 
 void	weave_threads(t_philosopher **lst)
 {

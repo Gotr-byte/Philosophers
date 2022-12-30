@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/28 21:25:32 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/29 20:06:29 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 Needs a function to check if everyone has eaten.
 
 */
-#include "./philosophers.h"
+#include "../includes/philosophers.h"
 
 long	get_time(void)
 {
@@ -30,7 +30,9 @@ void	eating(t_philosopher **arg)
 	time_t			get_second_fork;
 	time_t			mahlzeit;
 	time_t			target_eat_time;
+	int				end;
 
+	end = NOT_END;
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->fork);
 	printf("%ld %d has taken a fork\n", \
@@ -46,8 +48,17 @@ void	eating(t_philosopher **arg)
 	mahlzeit, philosopher->nb, mahlzeit, philosopher->nb);
 	philosopher->sleep_time_curr = philosopher->sleep_time_set;
 	target_eat_time = get_time() + philosopher->gorge_time;
-	while (get_time() < target_eat_time && philosopher->hourglass->end == NOT_END)
+	// pthread_mutex_lock(&philosopher->end);
+	// while (get_time() < target_eat_time &&  philosopher->hourglass->end)
+	while (get_time() < target_eat_time)
+	{
+		// if	(philosopher->hourglass->end == 0)
+		// 	pthread_exit(0);
+		// pthread_mutex_unlock(&philosopher->end);
 		usleep(100);
+		// pthread_mutex_lock(&philosopher->end);
+	}
+	// pthread_mutex_unlock(&philosopher->end);
 	pthread_mutex_unlock(&philosopher->next->fork);
 	pthread_mutex_unlock(&philosopher->fork);
 }
@@ -58,19 +69,13 @@ void	sleeping(t_philosopher **arg)
 	time_t			target_sleep_time;
 
 	philosopher = *arg;
-	// printf("philosopher->sleep_time_set: %d\n", philosopher->sleep_time_set);
 	target_sleep_time = get_time() + philosopher->sleep_time_set;
 	printf("%ld %d is sleeping\n", \
 	get_time() - philosopher->zero_time, \
 	philosopher->nb);
-	// usleep(philosopher->sleep_time_curr);
-	// philosopher->sleep_time_curr = 0;
-	
 	while (get_time() < target_sleep_time && philosopher->hourglass->end == NOT_END)
 	{
 		usleep(100);
-		// printf("currenttime: %ld\n", get_time());
-		// printf("targettime: %ld\n", targettime);
 	}
 }
 
@@ -87,11 +92,17 @@ void	thinking(t_philosopher **arg)
 void	*living(void *arg)
 {
 	t_philosopher	*philosopher;
+	int				has_eaten;
 
+	has_eaten = 0;
 	philosopher = (t_philosopher *)arg;
 	while (TRUE)
 	{
 		eating(&philosopher);
+		has_eaten++;
+		// printf("philosopher %d has eaten %d times\n", philosopher->nb, has_eaten);
+		if (has_eaten == philosopher->eat_times)
+			break;
 		sleeping(&philosopher);
 		thinking(&philosopher);
 	}
@@ -108,25 +119,21 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 	pthread_mutex_lock(&sands->is_dead);
 	if (get_time() - sands->last_eaten >= sands->time_to_die_set)
 	{
-		// printf("sands->hourglass_zero_time: %ld\n", sands->hourglass_zero_time);
-		// printf("get_time: %ld\n", get_time());
-		// printf("get_time() - sands->hourglass_zero_time: %ld\n",get_time() - sands->hourglass_zero_time);
+		// pthread_mutex_lock(&sands->end);
+		point_to_hourglass->end = END;
+		// pthread_mutex_unlock(&sands->end);
 		printf("%ld %d has died\n", \
 		get_time() - sands->hourglass_zero_time, \
 		sands->nb);
-		point_to_hourglass->end = END;
-
-		// expell_mutexes(table);
-		// release_list(table);
+		join_threads(table);
+		release_list(table);
+		free(*hourglass_recieve);
 		exit(0);
 	}
-	sands = sands->next;
-	usleep (100);
 	pthread_mutex_unlock(&sands->is_dead);
+	usleep (100);
+	sands = sands->next;
 }
-
-//waiter function placeholder
-// void	*waiter(void *)
 
 int	main(int ac, char **av)
 {
@@ -145,7 +152,7 @@ int	main(int ac, char **av)
 	while (i <= ft_atoi(av[1]))
 	{
 		local_lstadd_back(&table, ft_lstnew_int(i, ft_atoi(av[2]), \
-		ft_atoi(av[3]), ft_atoi(av[4]), &point_to_hourglass));
+		ft_atoi(av[3]), ft_atoi(av[4]), ft_atoi(av[5]), &point_to_hourglass));
 		i++;
 	}
 	last_point_first(&table);
