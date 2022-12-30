@@ -5,11 +5,3 @@ It is solved using threads and mutexes. Is a problem of sharing resources by sev
 The threads are a kind of process that does not inherit all the resources of the parent process (correct me if I'm wrong on this).
 The philosophers are threads, while the forks are resources. Each of them are sharing forks with their neighbour and need two to eat.
 Each of them have spaghetti in front of them.
-
-BETHAN WILLIAMS
-Community Lead, 42 Wolfsburg
-Porschestraße 2c
-D-38440 Wolfsburg
-Germany
-contact@42wolfsburg.de
-
