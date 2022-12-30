@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers_utils.c                               :+:      :+:    :+:   */
+/*   reading_arguments.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/29 18:24:13 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:59:00 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_wh_space(char *str)
 	return (i);
 }
 
-int	ft_atoi(const char *str)
+unsigned int	ft_atoi_uint(const char *str)
 {
 	int	val[4];
 

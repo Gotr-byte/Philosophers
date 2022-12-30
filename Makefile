@@ -1,9 +1,11 @@
-NAME := philosophers
+NAME := philo_one
 SRCFILES := ./src/philosophers.c \
 			./src/reading_arguments.c \
 			./src/create_list.c \
 			./src/manage_threads.c \
-			./src/release_list.c
+			./src/release_list.c\
+			./src/check_input.c\
+			./src/routines.c
 
 CC = cc
 # CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread

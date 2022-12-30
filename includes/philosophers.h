@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/30 11:11:42 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:54:04 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <limits.h>
 
 # define TRUE 1
 # define NOT_LAST 1
@@ -54,9 +55,9 @@ typedef struct s_philo
 
 
 void			free_lst(t_philosopher	*head);
-int				ft_atoi(const char *str);
+unsigned int	ft_atoi_uint(const char *str);
 void			*ft_calloc(size_t count, size_t size);
-t_philosopher	*ft_lstnew_int(int content, int die, int eat, int sleep, int times_eaten, t_hourglass **hourglass_recieve);
+t_philosopher	*ft_lstnew_int(int content, int die, int eat, int sleep, t_hourglass **hourglass_recieve);
 void			local_lstadd_back(t_philosopher **lst, t_philosopher *new);
 void			last_point_first(t_philosopher **lst);
 void			traverse_table(t_philosopher **lst, long curr_time);
@@ -68,4 +69,13 @@ void			release_list(t_philosopher **lst);
 void			*living(void *arg);
 void			detach_threads(t_philosopher **lst);
 long			get_time(void);
+int				argument_number_check(int ac, char **av);
+int				ft_isdigit_char(char c);
+void			eating(t_philosopher **arg);
+void			sleeping(t_philosopher **arg);
+void			thinking(t_philosopher **arg);
+void			*living(void *arg);
+void			hourglass(t_philosopher **table, t_hourglass **hourglass_recieve);
+void			print_safeguard(t_philosopher **philosopher_struct);
+void			philosopher_do(t_philosopher **philosopher, long x_time);
 #endif
