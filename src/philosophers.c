@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 12:13:20 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:29:42 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,18 @@ int	main(int ac, char **av)
 
 	if (argument_number_check(ac, av) != 0)
 		return (2);
-	printf ("ac: %d", ac);
 	table = NULL;
 	point_to_hourglass = NULL;
 	point_to_hourglass = ft_calloc(1, sizeof(t_hourglass));
 	point_to_hourglass->end = NOT_END;
 	i = 1;
+	if (ft_atoi_t(av[1]) == 1)
+	{
+		printf("0 1 has taken a fork\n");
+		usleep(ft_atoi_t(av[2]) * 1000);
+		printf("%lld 1 has died\n", ft_atoi_t(av[2]));
+		return (0);
+	}
 	while (i <= ft_atoi_t(av[1]))
 	{
 		local_lstadd_back(&table, ft_lstnew_int(i, ft_atoi_t(av[2]), \

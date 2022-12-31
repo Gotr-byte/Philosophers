@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:09:37 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:08:15 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:29:26 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int argument_number_check(int ac, char **av)
 		}
 		if ((ft_atoi_t(av[j]) == 0))
 		{
-			// write(2, "Error: Out of set scope\n", 25);
 			return(6);
 		}
 		j++;
