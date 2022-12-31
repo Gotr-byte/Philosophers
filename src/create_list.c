@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:20:33 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:47:40 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ void	last_point_first(t_philosopher **lst)
 	t_philosopher	*first;
 
 	last = *lst;
-	// if(last->next == NULL)
-	// {
-	// 	last->indicator = LAST;
-	// 	return ;
-	// }
 	while (last)
 	{
 		if (last->next == NULL)

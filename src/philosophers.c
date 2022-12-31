@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:29:42 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:49:42 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,43 @@ void	philosopher_do(t_philosopher **philosopher, long x_time)
 		pthread_mutex_lock(&philosopher_doing->end);
 		if (philosopher_doing->hourglass->end == END)
 		{
-			// pthread_mutex_unlock(&philosopher_doing->next->fork);
-			// pthread_mutex_unlock(&philosopher_doing->fork);
-			// pthread_mutex_unlock(&philosopher_doing->fork);
-			pthread_mutex_unlock(&philosopher_doing->end);
 			printf("This is the end of thread %d\n", philosopher_doing->nb);
+			pthread_mutex_unlock(&philosopher_doing->end);
+			pthread_mutex_unlock(&philosopher_doing->next->fork);
+			pthread_mutex_unlock(&philosopher_doing->fork);
 			pthread_exit(NULL);
 		}
 		else
+		{
 			pthread_mutex_unlock(&philosopher_doing->end);
-		usleep(100);
+			usleep(100);
+		}
 	}
 }
+			
+
+void	philosopher_sleep(t_philosopher **philosopher, long x_time)
+{
+	t_philosopher	*philosopher_doing;
+
+	philosopher_doing = *philosopher;
+	while (get_time() < x_time)
+	{
+		pthread_mutex_lock(&philosopher_doing->end);
+		if (philosopher_doing->hourglass->end == END)
+		{
+			printf("This is the end of thread %d\n", philosopher_doing->nb);
+			pthread_mutex_unlock(&philosopher_doing->end);
+			pthread_exit(NULL);
+		}
+		else
+		{
+			pthread_mutex_unlock(&philosopher_doing->end);
+			usleep(100);
+		}
+	}
+}
+			
 
 void	print_safeguard(t_philosopher **philosopher_struct)
 {
@@ -47,7 +72,6 @@ void	print_safeguard(t_philosopher **philosopher_struct)
 	pthread_mutex_lock(&philosopher_local->end);
 	if (philosopher_local->hourglass->end == END)
 	{
-		// pthread_mutex_unlock(&philosopher_local->next->fork);
 		pthread_mutex_unlock(&philosopher_local->fork);
 		pthread_mutex_unlock(&philosopher_local->end);
 		printf("Exited before second fork\n");
@@ -101,6 +125,6 @@ int	main(int ac, char **av)
 	hourglass(&table, &point_to_hourglass);
 	join_threads(&table);
 	expell_mutexes(&table);
-	release_list(&table);
+	release_list(&table, point_to_hourglass);
 	return (0);
 }

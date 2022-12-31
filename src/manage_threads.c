@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/30 10:40:37 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:52:18 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ void	expell_mutexes(t_philosopher **lst)
 	{
 		pthread_mutex_destroy(&(last->fork));
 		pthread_mutex_destroy(&(last->last_eaten_mutex));
+		pthread_mutex_destroy(&last->end);
 		last = last->next;
 	}
+	pthread_mutex_destroy(&last->end);
 	pthread_mutex_destroy(&(last->fork));
 	pthread_mutex_destroy(&(last->last_eaten_mutex));
 }

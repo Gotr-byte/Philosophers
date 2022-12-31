@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:06:05 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:47:12 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,6 @@ unsigned long long	ft_atoi_t(const char *str)
 	{
 		return(SET_SCOPE);
 	}
-	// if (str[val[0]] == '-')
-	// 	val[2] = -1;
-	// if (str[val[0]] == '-' || str[val[0]] == '+')
-	// {
-	// 	val[0]++;
-	// 	if (str[val[0] + 1] == '-' || str[val[0] + 1] == '+')
-	// 		return (0);
-	// }
 	while (((*(str + val[0])) >= 48) && ((*(str + val[0])) <= 57))
 	{
 		val[1] = 10 * val[1] + (int)(*(str + val[0]) - 48);

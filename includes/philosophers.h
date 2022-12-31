@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:05:21 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 16:49:54 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void				expell_mutexes(t_philosopher **lst);
 void				summon_mutexes(t_philosopher **lst);
 void				join_threads(t_philosopher **lst);
 void				weave_threads(t_philosopher **lst);
-void				release_list(t_philosopher **lst);
+void				release_list(t_philosopher **lst, t_hourglass *release);
 void				*living(void *arg);
 void				detach_threads(t_philosopher **lst);
 long				get_time(void);
@@ -79,4 +79,5 @@ void				*living(void *arg);
 void				hourglass(t_philosopher **table, t_hourglass **hourglass_recieve);
 void				print_safeguard(t_philosopher **philosopher_struct);
 void				philosopher_do(t_philosopher **philosopher, long x_time);
+void				philosopher_sleep(t_philosopher **philosopher, long x_time);
 #endif
