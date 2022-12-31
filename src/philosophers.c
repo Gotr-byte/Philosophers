@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/30 18:57:07 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 12:13:20 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ int	main(int ac, char **av)
 	point_to_hourglass = ft_calloc(1, sizeof(t_hourglass));
 	point_to_hourglass->end = NOT_END;
 	i = 1;
-	while (i <= ft_atoi_uint(av[1]))
+	while (i <= ft_atoi_t(av[1]))
 	{
-		local_lstadd_back(&table, ft_lstnew_int(i, ft_atoi_uint(av[2]), \
-		ft_atoi_uint(av[3]), ft_atoi_uint(av[4]), &point_to_hourglass));
+		local_lstadd_back(&table, ft_lstnew_int(i, ft_atoi_t(av[2]), \
+		ft_atoi_t(av[3]), ft_atoi_t(av[4]), &point_to_hourglass));
 		i++;
 	}
 	if (ac == 6)
 	{
-		table->eat_times = ft_atoi_uint(av[5]);
+		table->eat_times = ft_atoi_t(av[5]);
 	}
 	last_point_first(&table);
 	traverse_table(&table, get_time());

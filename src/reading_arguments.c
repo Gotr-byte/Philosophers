@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/30 18:59:00 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:06:05 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,19 @@ static int	ft_wh_space(char *str)
 	return (i);
 }
 
-unsigned int	ft_atoi_uint(const char *str)
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+unsigned long long	ft_atoi_t(const char *str)
 {
 	int	val[4];
 
@@ -32,14 +44,19 @@ unsigned int	ft_atoi_uint(const char *str)
 	val[1] = 0;
 	val[2] = 1;
 	val[3] = 0;
-	if (str[val[0]] == '-')
-		val[2] = -1;
-	if (str[val[0]] == '-' || str[val[0]] == '+')
+	
+	if (ft_strlen(str) > 9)
 	{
-		val[0]++;
-		if (str[val[0] + 1] == '-' || str[val[0] + 1] == '+')
-			return (0);
+		return(SET_SCOPE);
 	}
+	// if (str[val[0]] == '-')
+	// 	val[2] = -1;
+	// if (str[val[0]] == '-' || str[val[0]] == '+')
+	// {
+	// 	val[0]++;
+	// 	if (str[val[0] + 1] == '-' || str[val[0] + 1] == '+')
+	// 		return (0);
+	// }
 	while (((*(str + val[0])) >= 48) && ((*(str + val[0])) <= 57))
 	{
 		val[1] = 10 * val[1] + (int)(*(str + val[0]) - 48);
@@ -47,8 +64,11 @@ unsigned int	ft_atoi_uint(const char *str)
 		val[0]++;
 	}
 	if (val[3] != 0)
+	{
 		return (val[2] * val[1]);
+	}
 	return (0);
+		
 }
 
 static void	ft_bzero(void *s, size_t n)
