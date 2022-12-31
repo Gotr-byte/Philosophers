@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 16:49:42 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:39:03 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,18 @@ long	get_time(void)
 	return (tp.tv_sec * 1000 + tp.tv_usec / 1000);
 }
 
+void	set_eat_times(t_philosopher **table, int eat_number)
+{
+	t_philosopher	*eat_goal;
+
+	eat_goal = *table;
+	while (eat_goal)
+	{
+		eat_goal->eat_times = eat_number;
+		eat_goal = eat_goal->next;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	unsigned int	i;
@@ -116,7 +128,8 @@ int	main(int ac, char **av)
 	}
 	if (ac == 6)
 	{
-		table->eat_times = ft_atoi_t(av[5]);
+		set_eat_times(&table, ft_atoi_t(av[5]));
+		//  table->eat_times = ft_atoi_t(av[5]);
 	}
 	last_point_first(&table);
 	traverse_table(&table, get_time());

@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:47:40 by pbiederm         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:05:40 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int eat, int sleep, t_hourglass **hourglass_recieve)
 		tmp->gorge_time = eat;
 		tmp->sleep_time_set = sleep;
 		tmp->eat_times = -1;
+		tmp->eaten_full_value = 1;
 		tmp->next = NULL;
 		tmp->hourglass = point_to_hourglass;
 	}
