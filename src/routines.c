@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 18:51:03 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 17:01:55 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@ void	*living(void *arg)
 	{
 		eating(&philosopher);
 		has_eaten++;
-		printf("%d [has eaten]:[eat limit] | [%d]:[%d]\n", philosopher->nb, has_eaten, philosopher->eat_times);
+		// printf("%d [has eaten]:[eat limit] | [%d]:[%d]\n", philosopher->nb, has_eaten, philosopher->eat_times);
 		if (has_eaten == philosopher->eat_times && \
 		philosopher->eat_times != -1)
 			{
 				pthread_mutex_lock(&philosopher->eaten_full_mutex);
 				printf("%d has eaten full\n", philosopher->nb);
 				philosopher->eaten_full_value = 1;
+				pthread_mutex_lock(&philosopher->hourglass->full_philosophers_mutex);
+				philosopher->hourglass->number_of_full_philosophers++;
+				printf("did number of full philosophers increment: %d\n", philosopher->hourglass->number_of_full_philosophers);
+				pthread_mutex_unlock(&philosopher->hourglass->full_philosophers_mutex);
 				pthread_mutex_unlock(&philosopher->eaten_full_mutex);
 				pthread_exit(NULL);	
 			}
@@ -68,27 +72,18 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 	point_to_hourglass = *hourglass_recieve;
 	while (TRUE)
 	{
+		pthread_mutex_lock(&sands->hourglass->full_philosophers_mutex);
+		if (sands->number_of_philosophers == sands->hourglass->number_of_full_philosophers)
+			return ;
+		pthread_mutex_unlock(&sands->hourglass->full_philosophers_mutex);
 		while (sands->indicator != LAST)
 		{
-			pthread_mutex_lock(&sands->eaten_full_mutex);
-			if (&sands->eaten_full_value)
-			{
-				printf("have all eaten %d", have_all_eaten(table));
-				pthread_mutex_unlock(&sands->eaten_full_mutex);
-				if (have_all_eaten(table))
-				{
-					// usleep(1000);
-					return ;
-				}
-				continue;
-			}
-			pthread_mutex_unlock(&sands->eaten_full_mutex);
 			pthread_mutex_lock(&sands->last_eaten_mutex);
-			if (get_time() - sands->last_eaten >= sands->time_to_die_set)
+			if (get_time() - sands->last_eaten >= sands->time_to_die_set && sands->eaten_full_value == NOT_EATEN_FULL)
 			{
 				pthread_mutex_lock(&sands->end);
 				point_to_hourglass->end = END;
-				printf("%ld %d has died\n", \
+				printf("%ld %d has died in agony\n", \
 				get_time() - sands->hourglass_zero_time, \
 				sands->nb);
 				pthread_mutex_unlock(&sands->end);
@@ -98,16 +93,16 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 			else
 			{
 				pthread_mutex_unlock(&sands->last_eaten_mutex);
-				usleep (1000);
-				sands = sands->next;	
+				pthread_mutex_unlock(&sands->eaten_full_mutex);
+				sands = sands->next;
 			}
 		}
 		pthread_mutex_lock(&sands->last_eaten_mutex);
-		if (get_time() - sands->last_eaten >= sands->time_to_die_set)
+		if (get_time() - sands->last_eaten >= sands->time_to_die_set && sands->eaten_full_value == NOT_EATEN_FULL)
 		{
 			pthread_mutex_lock(&sands->end);
 			point_to_hourglass->end = END;
-			printf("%ld %d has died\n", \
+			printf("%ld %d has died in agony\n", \
 			get_time() - sands->hourglass_zero_time, \
 			sands->nb);
 			pthread_mutex_unlock(&sands->end);
@@ -117,9 +112,10 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 		else
 		{
 			pthread_mutex_unlock(&sands->last_eaten_mutex);
-			usleep (1000);
+			pthread_mutex_unlock(&sands->eaten_full_mutex);
 			sands = sands->next;
 		}
+		usleep (500);
 	}
 }
 			

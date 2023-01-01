@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 17:39:03 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 15:58:11 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	set_eat_times(t_philosopher **table, int eat_number)
 		eat_goal->eat_times = eat_number;
 		eat_goal = eat_goal->next;
 	}
+	// eat_goal->eat_times = eat_number;
 }
 
 int	main(int ac, char **av)
@@ -112,6 +113,7 @@ int	main(int ac, char **av)
 	point_to_hourglass = NULL;
 	point_to_hourglass = ft_calloc(1, sizeof(t_hourglass));
 	point_to_hourglass->end = NOT_END;
+	point_to_hourglass->number_of_full_philosophers = 0;
 	i = 1;
 	if (ft_atoi_t(av[1]) == 1)
 	{
@@ -122,7 +124,7 @@ int	main(int ac, char **av)
 	}
 	while (i <= ft_atoi_t(av[1]))
 	{
-		local_lstadd_back(&table, ft_lstnew_int(i, ft_atoi_t(av[2]), \
+		local_lstadd_back(&table, ft_lstnew_int(ft_atoi_t(av[1]), i, ft_atoi_t(av[2]), \
 		ft_atoi_t(av[3]), ft_atoi_t(av[4]), &point_to_hourglass));
 		i++;
 	}
