@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:13:06 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:46:29 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 			pthread_mutex_lock(&sands->last_eaten_mutex);
 			if (get_time() - sands->last_eaten >= sands->time_to_die_set && sands->eaten_full_value == NOT_EATEN_FULL)
 			{
+				pthread_mutex_unlock(&sands->last_eaten_mutex);
 				pthread_mutex_lock(&sands->end_mutex);
 				point_to_hourglass->end = END;
+				pthread_mutex_unlock(&sands->end_mutex);
 				printf("%ld %d has died\n", \
 				get_time() - sands->hourglass_zero_time, \
 				sands->nb);
-				pthread_mutex_unlock(&sands->end_mutex);
-				pthread_mutex_unlock(&sands->last_eaten_mutex);
 				return ;
 			}
 			else
@@ -96,13 +96,13 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 		pthread_mutex_lock(&sands->last_eaten_mutex);
 		if (get_time() - sands->last_eaten >= sands->time_to_die_set && sands->eaten_full_value == NOT_EATEN_FULL)
 		{
+			pthread_mutex_unlock(&sands->last_eaten_mutex);
 			pthread_mutex_lock(&sands->end_mutex);
 			point_to_hourglass->end = END;
+			pthread_mutex_unlock(&sands->end_mutex);
 			printf("%ld %d has died\n", \
 			get_time() - sands->hourglass_zero_time, \
 			sands->nb);
-			pthread_mutex_unlock(&sands->end_mutex);
-			pthread_mutex_unlock(&sands->last_eaten_mutex);
 			return ;
 		}
 		else
@@ -110,7 +110,7 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 			pthread_mutex_unlock(&sands->last_eaten_mutex);
 			sands = sands->next;
 		}
-		usleep (500);
+		usleep (1500);
 	}
 }
 			

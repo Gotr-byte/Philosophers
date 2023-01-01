@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:19:13 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:41:48 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ Needs a function to check if everyone has eaten.
 */
 #include "../includes/philosophers.h"
 
-void	philosopher_do(t_philosopher **philosopher, long x_time)
+void	philosopher_do(t_philosopher **philosopher)
 {
 	t_philosopher	*philosopher_doing;
+	long			x_time;
 
 	philosopher_doing = *philosopher;
+	x_time = get_time() + philosopher_doing->gorge_time;
 	while (get_time() < x_time)
 	{
 		pthread_mutex_lock(&philosopher_doing->end_mutex);

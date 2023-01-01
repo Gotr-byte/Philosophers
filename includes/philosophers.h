@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:12:04 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:47:59 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_philo
 void				free_lst(t_philosopher	*head);
 unsigned long long	ft_atoi_t(const char *str);
 void				*ft_calloc(size_t count, size_t size);
-t_philosopher	*ft_lstnew_int(int number_of_philo, int content, int die, int eat, int sleep, t_hourglass **hourglass_recieve);
+t_philosopher		*ft_lstnew_int(int number_of_philo, int content, int die, int eat, int sleep, t_hourglass **hourglass_recieve);
 void				local_lstadd_back(t_philosopher **lst, t_philosopher *new);
 void				last_point_first(t_philosopher **lst);
 void				traverse_table(t_philosopher **lst, long curr_time);
@@ -85,6 +85,6 @@ void				thinking(t_philosopher **arg);
 void				*living(void *arg);
 void				hourglass(t_philosopher **table, t_hourglass **hourglass_recieve);
 void				print_safeguard(t_philosopher **philosopher_struct);
-void				philosopher_do(t_philosopher **philosopher, long x_time);
+void				philosopher_do(t_philosopher **philosopher);
 void				philosopher_sleep(t_philosopher **philosopher, long x_time);
 #endif

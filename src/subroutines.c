@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:15:36 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:48:34 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	eating(t_philosopher **arg)
 	t_philosopher	*philosopher;
 	time_t			get_second_fork;
 	time_t			mahlzeit;
-	time_t			target_eat_time;
 	
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->fork);
@@ -53,8 +52,7 @@ void	eating(t_philosopher **arg)
 	printf("%ld %d has taken a fork\n%ld %d is eating\n", \
 	mahlzeit, philosopher->nb, mahlzeit, philosopher->nb);
 	philosopher->sleep_time_curr = philosopher->sleep_time_set;
-	target_eat_time = get_time() + philosopher->gorge_time;
-	philosopher_do(&philosopher, target_eat_time);
+	philosopher_do(&philosopher);
 	pthread_mutex_unlock(&philosopher->next->fork);
 	pthread_mutex_unlock(&philosopher->fork);
 }
