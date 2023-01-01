@@ -9,9 +9,9 @@ SRCFILES := ./src/philosophers.c \
 			./src/subroutines.c
 
 CC = cc
-# CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
+CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
 # CFLAGS = -Wextra -Werror -Wall -g -pthread
-CFLAGS = -Wextra -Werror -Wall -pthread
+# CFLAGS = -Wextra -Werror -Wall -pthread
 OBJS := $(SRCFILES:.c=.o) 
 
 all: $(NAME)

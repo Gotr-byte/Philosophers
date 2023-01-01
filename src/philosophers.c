@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 17:34:30 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:19:13 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	philosopher_do(t_philosopher **philosopher, long x_time)
 	philosopher_doing = *philosopher;
 	while (get_time() < x_time)
 	{
-		pthread_mutex_lock(&philosopher_doing->hourglass->end_mutex);
+		pthread_mutex_lock(&philosopher_doing->end_mutex);
 		if (philosopher_doing->hourglass->end == END)
 		{
-			pthread_mutex_unlock(&philosopher_doing->hourglass->end_mutex);
+			pthread_mutex_unlock(&philosopher_doing->end_mutex);
 			pthread_mutex_unlock(&philosopher_doing->next->fork);
 			pthread_mutex_unlock(&philosopher_doing->fork);
 			pthread_exit(NULL);
 		}
 		else
 		{
-			pthread_mutex_unlock(&philosopher_doing->hourglass->end_mutex);
+			pthread_mutex_unlock(&philosopher_doing->end_mutex);
 			usleep(100);
 		}
 	}
@@ -47,15 +47,15 @@ void	philosopher_sleep(t_philosopher **philosopher, long x_time)
 	philosopher_doing = *philosopher;
 	while (get_time() < x_time)
 	{
-		pthread_mutex_lock(&philosopher_doing->hourglass->end_mutex);
+		pthread_mutex_lock(&philosopher_doing->end_mutex);
 		if (philosopher_doing->hourglass->end == END)
 		{
-			pthread_mutex_unlock(&philosopher_doing->hourglass->end_mutex);
+			pthread_mutex_unlock(&philosopher_doing->end_mutex);
 			pthread_exit(NULL);
 		}
 		else
 		{
-			pthread_mutex_unlock(&philosopher_doing->hourglass->end_mutex);
+			pthread_mutex_unlock(&philosopher_doing->end_mutex);
 			usleep(100);
 		}
 	}
@@ -67,15 +67,15 @@ void	print_safeguard(t_philosopher **philosopher_struct)
 	t_philosopher	*philosopher_local;
 
 	philosopher_local = *philosopher_struct;
-	pthread_mutex_lock(&philosopher_local->hourglass->end_mutex);
+	pthread_mutex_lock(&philosopher_local->end_mutex);
 	if (philosopher_local->hourglass->end == END)
 	{
 		pthread_mutex_unlock(&philosopher_local->fork);
-		pthread_mutex_unlock(&philosopher_local->hourglass->end_mutex);
+		pthread_mutex_unlock(&philosopher_local->end_mutex);
 		pthread_exit(NULL);
 	}
 	else
-		pthread_mutex_unlock(&philosopher_local->hourglass->end_mutex);
+		pthread_mutex_unlock(&philosopher_local->end_mutex);
 }
 long	get_time(void)
 {
