@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2022/12/31 14:52:18 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/01 19:17:40 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ void	summon_mutexes(t_philosopher **lst)
 	{
 		pthread_mutex_init(&(last->fork), NULL);
 		pthread_mutex_init(&(last->last_eaten_mutex), NULL);
-		pthread_mutex_init(&(last->end), NULL);
+		pthread_mutex_init(&(last->end_mutex), NULL);
+		// pthread_mutex_init(&(last->eaten_full_mutex), NULL);
 		last = last->next;
 	}
 	pthread_mutex_init(&(last->last_eaten_mutex), NULL);
 	pthread_mutex_init(&(last->fork), NULL);
-	pthread_mutex_init(&(last->end), NULL);
+	pthread_mutex_init(&(last->end_mutex), NULL);
+	// pthread_mutex_init(&(last->eaten_full_mutex), NULL);
 }
 
 void	expell_mutexes(t_philosopher **lst)
@@ -81,10 +83,12 @@ void	expell_mutexes(t_philosopher **lst)
 	{
 		pthread_mutex_destroy(&(last->fork));
 		pthread_mutex_destroy(&(last->last_eaten_mutex));
-		pthread_mutex_destroy(&last->end);
+		pthread_mutex_destroy(&last->end_mutex);
+		// pthread_mutex_destroy(&last->eaten_full_mutex);
 		last = last->next;
 	}
-	pthread_mutex_destroy(&last->end);
+	pthread_mutex_destroy(&last->end_mutex);
 	pthread_mutex_destroy(&(last->fork));
 	pthread_mutex_destroy(&(last->last_eaten_mutex));
+	// pthread_mutex_destroy(&last->eaten_full_mutex);
 }
