@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 17:43:12 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:47:34 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,45 +100,11 @@ t_hourglass	*initialize_hourglass(t_hourglass *point_to_hourglass)
 	return (point_to_hourglass);
 }
 
-// void	initialization_step(int ac, char **av, 
-// t_philosopher **rec, t_hourglass **enders)
-// {
-// 	long long unsigned int	i;
-// 	t_philosopher			*table;
-// 	t_hourglass				*point_to_hourglass;
-
-// 	table = *rec;
-// 	point_to_hourglass = *enders;
-// 	initialize_hourglass(&point_to_hourglass);
-// 	i = 1;
-// 	while (i <= ft_atoi_t(av[1]))
-// 	{
-// 		local_lstadd_back(&table, ft_lstnew_int(av, i, &point_to_hourglass));
-// 		i++;
-// 	}
-// 	if (ac == 6)
-// 		set_eat_times(&table, ft_atoi_t(av[5]));
-// 	last_point_first(&table);
-// 	traverse_table(&table, get_time());
-// 	summon_mutexes(&table);
-// }
-
-
-int	main(int ac, char **av)
+t_philosopher	*initialization_step(int ac, char **av, \
+t_philosopher *table, t_hourglass *point_to_hourglass)
 {
-	unsigned int	i;
-	t_philosopher	*table;
-	t_hourglass		*point_to_hourglass;
+	long long unsigned int	i;
 
-	table = NULL;
-	point_to_hourglass = NULL;
-	point_to_hourglass = initialize_hourglass(point_to_hourglass);
-	if (argument_number_check(ac, av) != 0)
-		return (2);
-	if (single_philosopher(av))
-		return (0);
-	// initialization_step(ac, av, &table, &point_to_hourglass);
-	// initialize_hourglass(&point_to_hourglass);
 	i = 1;
 	while (i <= ft_atoi_t(av[1]))
 	{
@@ -150,6 +116,36 @@ int	main(int ac, char **av)
 	last_point_first(&table);
 	traverse_table(&table, get_time());
 	summon_mutexes(&table);
+	return(table);
+}
+
+
+int	main(int ac, char **av)
+{
+	// unsigned int	i;
+	t_philosopher	*table;
+	t_hourglass		*point_to_hourglass;
+
+	table = NULL;
+	point_to_hourglass = NULL;
+	if (argument_number_check(ac, av) != 0)
+		return (2);
+	if (single_philosopher(av))
+		return (0);
+	point_to_hourglass = initialize_hourglass(point_to_hourglass);
+	table = initialization_step(ac, av, table, point_to_hourglass);
+	// initialize_hourglass(&point_to_hourglass);
+	// i = 1;
+	// while (i <= ft_atoi_t(av[1]))
+	// {
+	// 	local_lstadd_back(&table, ft_lstnew_int(av, i, &point_to_hourglass));
+	// 	i++;
+	// }
+	// if (ac == 6)
+	// 	set_eat_times(&table, ft_atoi_t(av[5]));
+	// last_point_first(&table);
+	// traverse_table(&table, get_time());
+	// summon_mutexes(&table);
 	weave_threads(&table);
 	// printf ("seg check\n");
 	// exit (0);	

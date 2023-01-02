@@ -1,4 +1,4 @@
-NAME := philo_one
+NAME := philo_two
 SRCFILES := ./src/philosophers.c \
 			./src/reading_arguments.c \
 			./src/create_list.c \
