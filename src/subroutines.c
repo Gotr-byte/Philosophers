@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:48:34 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:57:22 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	eating(t_philosopher **arg)
 	t_philosopher	*philosopher;
 	time_t			get_second_fork;
 	time_t			mahlzeit;
-	
+
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->fork);
 	print_safeguard(&philosopher);

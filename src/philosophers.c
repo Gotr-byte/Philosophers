@@ -6,13 +6,12 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:41:48 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:43:12 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 Needs a function to check if everyone has eaten.
-
 */
 #include "../includes/philosophers.h"
 
@@ -40,7 +39,6 @@ void	philosopher_do(t_philosopher **philosopher)
 		}
 	}
 }
-			
 
 void	philosopher_sleep(t_philosopher **philosopher, long x_time)
 {
@@ -62,7 +60,6 @@ void	philosopher_sleep(t_philosopher **philosopher, long x_time)
 		}
 	}
 }
-			
 
 void	print_safeguard(t_philosopher **philosopher_struct)
 {
@@ -79,13 +76,6 @@ void	print_safeguard(t_philosopher **philosopher_struct)
 	else
 		pthread_mutex_unlock(&philosopher_local->end_mutex);
 }
-long	get_time(void)
-{
-	struct timeval	tp;
-
-	gettimeofday(&tp, NULL);
-	return (tp.tv_sec * 1000 + tp.tv_usec / 1000);
-}
 
 void	set_eat_times(t_philosopher **table, int eat_number)
 {
@@ -99,41 +89,70 @@ void	set_eat_times(t_philosopher **table, int eat_number)
 	}
 }
 
+
+t_hourglass	*initialize_hourglass(t_hourglass *point_to_hourglass)
+{
+
+	point_to_hourglass = NULL;
+	point_to_hourglass = ft_calloc(1, sizeof(t_hourglass));
+	point_to_hourglass->end = NOT_END;
+	point_to_hourglass->number_of_full_philosophers = 0;
+	return (point_to_hourglass);
+}
+
+// void	initialization_step(int ac, char **av, 
+// t_philosopher **rec, t_hourglass **enders)
+// {
+// 	long long unsigned int	i;
+// 	t_philosopher			*table;
+// 	t_hourglass				*point_to_hourglass;
+
+// 	table = *rec;
+// 	point_to_hourglass = *enders;
+// 	initialize_hourglass(&point_to_hourglass);
+// 	i = 1;
+// 	while (i <= ft_atoi_t(av[1]))
+// 	{
+// 		local_lstadd_back(&table, ft_lstnew_int(av, i, &point_to_hourglass));
+// 		i++;
+// 	}
+// 	if (ac == 6)
+// 		set_eat_times(&table, ft_atoi_t(av[5]));
+// 	last_point_first(&table);
+// 	traverse_table(&table, get_time());
+// 	summon_mutexes(&table);
+// }
+
+
 int	main(int ac, char **av)
 {
 	unsigned int	i;
 	t_philosopher	*table;
 	t_hourglass		*point_to_hourglass;
 
-	if (argument_number_check(ac, av) != 0)
-		return (2);
 	table = NULL;
 	point_to_hourglass = NULL;
-	point_to_hourglass = ft_calloc(1, sizeof(t_hourglass));
-	point_to_hourglass->end = NOT_END;
-	point_to_hourglass->number_of_full_philosophers = 0;
-	i = 1;
-	if (ft_atoi_t(av[1]) == 1)
-	{
-		printf("0 1 has taken a fork\n");
-		usleep(ft_atoi_t(av[2]) * 1000);
-		printf("%lld 1 has died\n", ft_atoi_t(av[2]));
+	point_to_hourglass = initialize_hourglass(point_to_hourglass);
+	if (argument_number_check(ac, av) != 0)
+		return (2);
+	if (single_philosopher(av))
 		return (0);
-	}
+	// initialization_step(ac, av, &table, &point_to_hourglass);
+	// initialize_hourglass(&point_to_hourglass);
+	i = 1;
 	while (i <= ft_atoi_t(av[1]))
 	{
-		local_lstadd_back(&table, ft_lstnew_int(ft_atoi_t(av[1]), i, ft_atoi_t(av[2]), \
-		ft_atoi_t(av[3]), ft_atoi_t(av[4]), &point_to_hourglass));
+		local_lstadd_back(&table, ft_lstnew_int(av, i, &point_to_hourglass));
 		i++;
 	}
 	if (ac == 6)
-	{
 		set_eat_times(&table, ft_atoi_t(av[5]));
-	}
 	last_point_first(&table);
 	traverse_table(&table, get_time());
 	summon_mutexes(&table);
 	weave_threads(&table);
+	// printf ("seg check\n");
+	// exit (0);	
 	hourglass(&table, &point_to_hourglass);
 	join_threads(&table);
 	expell_mutexes(&table);

@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 17:13:08 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:03:39 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,12 @@ void	local_lstadd_back(t_philosopher **lst, t_philosopher *new)
 	return ;
 }
 
-t_philosopher	*ft_lstnew_int(int number_of_philo, int content, int die, \
-int eat, int sleep, t_hourglass **hourglass_recieve)
+t_philosopher	*ft_lstnew_int(char **av, int content, t_hourglass **recieve)
 {
 	t_philosopher	*tmp;
 	t_hourglass		*point_to_hourglass;
 
-	point_to_hourglass = *hourglass_recieve;
+	point_to_hourglass = *recieve;
 	tmp = (t_philosopher *)ft_calloc(1, sizeof(t_philosopher));
 	if (!tmp)
 		return (NULL);
@@ -67,10 +66,10 @@ int eat, int sleep, t_hourglass **hourglass_recieve)
 	if (tmp)
 	{
 		tmp->nb = content;
-		tmp->number_of_philosophers = number_of_philo;
-		tmp->time_to_die_set = die;
-		tmp->gorge_time = eat;
-		tmp->sleep_time_set = sleep;
+		tmp->number_of_philosophers = ft_atoi_t(av[1]);
+		tmp->time_to_die_set = ft_atoi_t(av[2]);
+		tmp->gorge_time = ft_atoi_t(av[3]);
+		tmp->sleep_time_set = ft_atoi_t(av[4]);
 		tmp->eat_times = -1;
 		tmp->eaten_full_value = NOT_EATEN_FULL;
 		tmp->next = NULL;

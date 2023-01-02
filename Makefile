@@ -6,7 +6,9 @@ SRCFILES := ./src/philosophers.c \
 			./src/release_list.c\
 			./src/check_input.c\
 			./src/routines.c\
-			./src/subroutines.c
+			./src/subroutines.c\
+			./src/get_time.c\
+			./src/single_philosopher.c
 
 CC = cc
 # CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
