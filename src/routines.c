@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 18:07:15 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:17:10 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,11 @@ int have_all_eaten(t_philosopher **table)
 	return (1);
 }
 
-void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
+void	hourglass(t_philosopher **table)
 {
 	t_philosopher	*sands;
-	t_hourglass		*point_to_hourglass;
 
 	sands = *table;
-	point_to_hourglass = *hourglass_recieve;
 	while (TRUE)
 	{
 		pthread_mutex_lock(&sands->hourglass->full_philosophers_mutex);
@@ -79,9 +77,9 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 			if (get_time() - sands->last_eaten >= sands->time_to_die_set && sands->eaten_full_value == NOT_EATEN_FULL)
 			{
 				pthread_mutex_unlock(&sands->last_eaten_mutex);
-				pthread_mutex_lock(&sands->end_mutex);
-				point_to_hourglass->end = END;
-				pthread_mutex_unlock(&sands->end_mutex);
+				pthread_mutex_lock(&sands->hourglass->print_guard_mutex);
+				sands->hourglass->end = END;
+				pthread_mutex_unlock(&sands->hourglass->print_guard_mutex);
 				printf("%ld %d died\n", \
 				get_time() - sands->hourglass_zero_time, \
 				sands->nb);
@@ -97,9 +95,9 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 		if (get_time() - sands->last_eaten >= sands->time_to_die_set && sands->eaten_full_value == NOT_EATEN_FULL)
 		{
 			pthread_mutex_unlock(&sands->last_eaten_mutex);
-			pthread_mutex_lock(&sands->end_mutex);
-			point_to_hourglass->end = END;
-			pthread_mutex_unlock(&sands->end_mutex);
+			pthread_mutex_lock(&sands->hourglass->print_guard_mutex);
+			sands->hourglass->end = END;
+			pthread_mutex_unlock(&sands->hourglass->print_guard_mutex);
 			printf("%ld %d has died\n", \
 			get_time() - sands->hourglass_zero_time, \
 			sands->nb);
@@ -110,7 +108,7 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 			pthread_mutex_unlock(&sands->last_eaten_mutex);
 			sands = sands->next;
 		}
-		usleep (1500);
+		usleep (1000);
 	}
 }
 			

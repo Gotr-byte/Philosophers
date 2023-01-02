@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 18:17:15 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 19:16:05 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ void				eating(t_philosopher **arg);
 void				sleeping(t_philosopher **arg);
 void				thinking(t_philosopher **arg);
 void				*living(void *arg);
-void				hourglass(t_philosopher **table, \
-t_hourglass **hourglass_recieve);
+void				hourglass(t_philosopher **table);
 void				print_safeguard(t_philosopher **philosopher_struct);
 void				philosopher_do(t_philosopher **philosopher);
 void				philosopher_sleep(t_philosopher **philosopher, long x_time);
