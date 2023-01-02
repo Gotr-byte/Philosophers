@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/01 19:46:29 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:07:15 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	hourglass(t_philosopher **table, t_hourglass **hourglass_recieve)
 				pthread_mutex_lock(&sands->end_mutex);
 				point_to_hourglass->end = END;
 				pthread_mutex_unlock(&sands->end_mutex);
-				printf("%ld %d has died\n", \
+				printf("%ld %d died\n", \
 				get_time() - sands->hourglass_zero_time, \
 				sands->nb);
 				return ;

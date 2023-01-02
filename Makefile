@@ -1,4 +1,4 @@
-NAME := philo_two
+NAME := philo_one
 SRCFILES := ./src/philosophers.c \
 			./src/reading_arguments.c \
 			./src/create_list.c \
@@ -8,7 +8,8 @@ SRCFILES := ./src/philosophers.c \
 			./src/routines.c\
 			./src/subroutines.c\
 			./src/get_time.c\
-			./src/single_philosopher.c
+			./src/single_philosopher.c\
+			./src/initialization.c
 
 CC = cc
 # CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread

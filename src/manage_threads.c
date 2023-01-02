@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 16:55:21 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:18:40 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	summon_mutexes(t_philosopher **lst)
 	t_philosopher	*last;
 
 	last = *lst;
+	pthread_mutex_init(&(last->hourglass->last_eaten_mutex));
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_init(&(last->fork), NULL);
@@ -77,6 +78,7 @@ void	expell_mutexes(t_philosopher **lst)
 	t_philosopher	*last;
 
 	last = *lst;
+	pthread_mutex_destroy(&(last->hourglass->last_eaten_mutex));
 	while (last->indicator != LAST)
 	{
 		pthread_mutex_destroy(&(last->fork));

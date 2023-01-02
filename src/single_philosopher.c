@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:08:00 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 17:21:13 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 18:07:06 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int single_philosopher(char **av)
 	{
 		printf("0 1 has taken a fork\n");
 		usleep(ft_atoi_t(av[2]) * 1000);
-		printf("%lld 1 has died\n", ft_atoi_t(av[2]));
+		printf("%lld 1 died\n", ft_atoi_t(av[2]));
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 17:36:28 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:52:37 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ unsigned long long	ft_atoi_t(const char *str)
 		return (val[2] * val[1]);
 	}
 	return (0);
-		
 }
 
 static void	ft_bzero(void *s, size_t n)
