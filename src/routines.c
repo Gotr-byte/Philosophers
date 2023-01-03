@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 19:43:06 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:50:52 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,11 @@ void	*living(void *arg)
 	return (NULL);
 }
 
-int have_all_eaten(t_philosopher **table)
-{
-	t_philosopher	*checker;
-	
-	checker = *table;
-	while (checker->indicator != LAST)
-	{
-		pthread_mutex_lock(&checker->eaten_full_mutex);
-		if(checker->eaten_full_value == 0)
-			return(0);
-		pthread_mutex_unlock(&checker->eaten_full_mutex);
-		checker = checker->next;
-	}
-	pthread_mutex_lock(&checker->eaten_full_mutex);
-	if(checker->eaten_full_value == 0)
-		return(0);
-	pthread_mutex_unlock(&checker->eaten_full_mutex);
-	return (1);
-}
 
+
+/*Discovered that the horglass doest check if the philosophers are dead all 
+of the time. Need to change the way the list is beeing traversed. Maybe with
+the number of philosophers in the hourglass struct*/
 void	*hourglass(void *timer)
 {
 	t_timer	*sands;

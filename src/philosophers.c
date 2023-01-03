@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/03 20:42:06 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:48:34 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,10 @@ Needs a function to check if everyone has eaten.
 */
 #include "../includes/philosophers.h"
 
-void	print_safeguard(t_philosopher **philosopher_struct)
-{
-	t_philosopher	*philosopher_local;
 
-	philosopher_local = *philosopher_struct;
-	pthread_mutex_lock(&philosopher_local->hourglass->print_guard_mutex);
-	if (philosopher_local->hourglass->end == END)
-	{
-		pthread_mutex_unlock(&philosopher_local->hourglass->print_guard_mutex);
-		pthread_exit(NULL);
-	}
-	else
-		pthread_mutex_unlock(&philosopher_local->hourglass->print_guard_mutex);
-}
-
-/*Needs a function that checks if any are alive. May make a lite version.*/
+/*Needs a function that checks if any are alive. May make a lite version.
+Needs a way to traverse all of the elements of an array. Maybe add a value
+to the hourglass struct.*/
 int	main(int ac, char **av)
 {
 	t_philosopher	*table;

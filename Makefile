@@ -9,7 +9,8 @@ SRCFILES := ./src/philosophers.c \
 			./src/subroutines.c\
 			./src/get_time.c\
 			./src/single_philosopher.c\
-			./src/initialization.c
+			./src/initialization.c\
+			./src/guards.c
 
 CC = cc
 # CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
