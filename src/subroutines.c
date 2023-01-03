@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 18:21:14 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:42:21 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	eating(t_philosopher **arg)
 {
 	t_philosopher	*philosopher;
-	// time_t			get_second_fork;
 
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->fork);
@@ -27,29 +26,24 @@ void	eating(t_philosopher **arg)
 	pthread_mutex_lock(&philosopher->hourglass->print_guard_mutex);
 	if (philosopher->hourglass->end == END)
 	{
-		// pthread_mutex_unlock(&philosopher->next->fork);
-		// pthread_mutex_unlock(&philosopher->fork);
 		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
 		pthread_exit(NULL);
 	}
 	else
 		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
-	// get_second_fork = get_time();
 	pthread_mutex_lock(&philosopher->last_eaten_mutex);
 	philosopher->last_eaten = get_time();
 	pthread_mutex_unlock(&philosopher->last_eaten_mutex);
-	// mahlzeit = get_second_fork - philosopher->zero_time;
 	pthread_mutex_lock(&philosopher->hourglass->print_guard_mutex);
 	if (philosopher->hourglass->end == END)
 	{
-		// pthread_mutex_unlock(&philosopher->next->fork);
-		// pthread_mutex_unlock(&philosopher->fork);
 		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
 		pthread_exit(NULL);
 	}
 	pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
 	printf("%ld %d has taken a fork\n%ld %d is eating\n", \
-	get_time() - philosopher->zero_time, philosopher->nb, get_time() - philosopher->zero_time, philosopher->nb);
+	get_time() - philosopher->zero_time, philosopher->nb, \
+	get_time() - philosopher->zero_time, philosopher->nb);
 	philosopher->sleep_time_curr = philosopher->sleep_time_set;
 	philosopher_do(&philosopher);
 	pthread_mutex_unlock(&philosopher->next->fork);
@@ -91,4 +85,52 @@ void	thinking(t_philosopher **arg)
 	printf("%ld %d is thinking\n", \
 	get_time() - philosopher->zero_time, \
 	philosopher->nb);
+}
+
+void	philosopher_do(t_philosopher **philosopher)
+{
+	t_philosopher	*philosopher_doing;
+	long			x_time;
+
+	philosopher_doing = *philosopher;
+	x_time = get_time() + philosopher_doing->gorge_time;
+	while (get_time() < x_time)
+	{
+		pthread_mutex_lock(&philosopher_doing->hourglass->print_guard_mutex);
+		if (philosopher_doing->hourglass->end == END)
+		{
+			pthread_mutex_unlock(&philosopher_doing->\
+			hourglass->print_guard_mutex);
+			pthread_exit(NULL);
+		}
+		else
+		{
+			pthread_mutex_unlock(&philosopher_doing->\
+			hourglass->print_guard_mutex);
+			usleep(100);
+		}
+	}
+}
+
+void	philosopher_sleep(t_philosopher **philosopher, long x_time)
+{
+	t_philosopher	*philosopher_doing;
+
+	philosopher_doing = *philosopher;
+	while (get_time() < x_time)
+	{
+		pthread_mutex_lock(&philosopher_doing->hourglass->print_guard_mutex);
+		if (philosopher_doing->hourglass->end == END)
+		{
+			pthread_mutex_unlock(&philosopher_doing->\
+			hourglass->print_guard_mutex);
+			pthread_exit(NULL);
+		}
+		else
+		{
+			pthread_mutex_unlock(&philosopher_doing->\
+			hourglass->print_guard_mutex);
+			usleep(100);
+		}
+	}
 }

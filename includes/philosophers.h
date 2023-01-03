@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 19:42:15 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:36:10 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ typedef struct s_philo
 typedef struct s_timer
 {
 	pthread_t			id;
-	t_philosopher	*philosophers;
-	t_hourglass		*hourglass;
+	t_philosopher		*philosophers;
+	t_hourglass			*hourglass;
 }t_timer;
-
-
 
 void				free_lst(t_philosopher	*head);
 unsigned long long	ft_atoi_t(const char *str);
@@ -83,7 +81,8 @@ void				expell_mutexes(t_philosopher **lst);
 void				summon_mutexes(t_philosopher **lst);
 void				join_threads(t_philosopher **lst);
 void				weave_threads(t_philosopher **lst);
-void				release_list(t_philosopher **lst, t_hourglass *release, t_timer *reaper);
+void				release_list(t_philosopher **lst, \
+t_hourglass *release, t_timer *reaper);
 void				*living(void *arg);
 void				detach_threads(t_philosopher **lst);
 long				get_time(void);

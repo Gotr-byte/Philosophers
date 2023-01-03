@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 12:07:08 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 17:52:37 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:39:52 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ unsigned long long	ft_atoi_t(const char *str)
 	val[1] = 0;
 	val[2] = 1;
 	val[3] = 0;
-
 	if (ft_strlen(str) > 9)
 	{
 		return (SET_SCOPE);
