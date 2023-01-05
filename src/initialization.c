@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:49:46 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/03 20:36:42 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:02:35 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_philosopher *table, t_hourglass *point_to_hourglass)
 	if (ac == 6)
 		set_eat_times(&table, ft_atoi_t(av[5]));
 	last_point_first(&table);
-	traverse_table(&table, get_time());
 	summon_mutexes(&table);
 	return (table);
 }

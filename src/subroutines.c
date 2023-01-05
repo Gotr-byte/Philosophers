@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 14:14:16 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:21:57 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	eating(t_philosopher **arg)
 	pthread_mutex_lock(&philosopher->hourglass->print_guard_mutex);
 	if (philosopher->hourglass->end == END)
 	{
+		pthread_mutex_unlock(&philosopher->next->fork);
+		pthread_mutex_unlock(&philosopher->fork);
 		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
 		pthread_exit(NULL);
 	}
@@ -44,7 +46,6 @@ void	eating(t_philosopher **arg)
 	printf("%ld %d has taken a fork\n%ld %d is eating\n", \
 	get_time() - philosopher->zero_time, philosopher->nb, \
 	get_time() - philosopher->zero_time, philosopher->nb);
-	// philosopher->sleep_time_curr = philosopher->sleep_time_set;
 	philosopher_do(&philosopher);
 	pthread_mutex_unlock(&philosopher->next->fork);
 	pthread_mutex_unlock(&philosopher->fork);
@@ -101,6 +102,8 @@ void	philosopher_do(t_philosopher **philosopher)
 		{
 			pthread_mutex_unlock(&philosopher_doing->\
 			hourglass->print_guard_mutex);
+			pthread_mutex_unlock(&philosopher_doing->next->fork);
+			pthread_mutex_unlock(&philosopher_doing->fork);
 			pthread_exit(NULL);
 		}
 		else

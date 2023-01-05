@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 17:03:39 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:14:41 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,4 @@ t_philosopher	*ft_lstnew_int(char **av, int content, t_hourglass **recieve)
 		tmp->hourglass = point_to_hourglass;
 	}
 	return (tmp);
-}
-
-void	traverse_table(t_philosopher **lst, long curr_time)
-{
-	t_philosopher	*last;
-
-	last = *lst;
-	while (last->indicator != LAST)
-	{
-		last->zero_time = curr_time;
-		last->hourglass_zero_time = curr_time;
-		last->last_eaten = curr_time;
-		last = last->next;
-	}
-	last->zero_time = curr_time;
-	last->hourglass_zero_time = curr_time;
-	last->last_eaten = curr_time;
 }

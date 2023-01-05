@@ -13,7 +13,7 @@ SRCFILES := ./src/philosophers.c \
 			./src/guards.c
 
 CC = cc
-# CFLAGS = -Wextra -Werror -Wall -g -pthread -fsanitize=thread
+# CFLAGS = -Wextra -Werror -Wall -pthread -fsanitize=thread
 # CFLAGS = -Wextra -Werror -Wall -g -pthread
 CFLAGS = -Wextra -Werror -Wall -pthread
 OBJS := $(SRCFILES:.c=.o) 

@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/02 18:22:50 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:26:58 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,33 @@
 void	weave_threads(t_philosopher **lst)
 {
 	t_philosopher	*last;
+	long			start_time;
 
+	start_time = get_time() + 5000;
+	printf("start time equals %ld\n",start_time);
 	last = *lst;
 	while (last->indicator != LAST)
 	{
-		if (last->nb % 2 == 0)
-			usleep(50);
+		last->zero_time = start_time;
+		last->hourglass_zero_time = start_time;
+		last->hourglass->hourglass_zero_time = start_time;
+		last->last_eaten = start_time;
+		last->start = 0;
+		last->hourglass->start = 0;
+		last = last->next;
+	}
+	last->zero_time = start_time;
+	last->hourglass_zero_time = start_time;
+	last->hourglass->hourglass_zero_time = start_time;
+	last->last_eaten = start_time;
+	last->start = 0;
+	last->hourglass->start = 0;
+	last = *lst;
+	while (last->indicator != LAST)
+	{
 		pthread_create(&last->pt_id, NULL, living, last);
 		last = last->next;
 	}
-	if (last->nb % 2 == 0)
-		usleep(50);
 	pthread_create(&last->pt_id, NULL, living, last);
 }
 
