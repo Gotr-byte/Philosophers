@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 19:32:23 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:57:08 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	sleeping(t_philosopher **arg)
 		get_time() - philosopher->zero_time, \
 		philosopher->nb);
 		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
-		philosopher_sleep (&philosopher, target_sleep_time);	
+		philosopher_sleep(&philosopher, target_sleep_time);
 	}
 }
 
@@ -94,7 +94,7 @@ void	philosopher_do(t_philosopher **philosopher)
 		{
 			pthread_mutex_unlock(&philosopher_doing->\
 			hourglass->print_guard_mutex);
-			usleep(100);
+			usleep(500);
 		}
 	}
 }
@@ -117,7 +117,7 @@ void	philosopher_sleep(t_philosopher **philosopher, long x_time)
 		{
 			pthread_mutex_unlock(&philosopher_doing->\
 			hourglass->print_guard_mutex);
-			usleep(100);
+			usleep(500);
 		}
 	}
 }
