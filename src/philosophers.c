@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 18:25:12 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:08:54 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	main(int ac, char **av)
 	table = NULL;
 	point_to_hourglass = NULL;
 	reaper = NULL;
-	reaper = malloc(sizeof(reaper));
-	reaper->id = 42;
 	if (argument_number_check(ac, av) != 0)
 		return (2);
 	if (single_philosopher(av))
 		return (0);
+	reaper = malloc(sizeof(reaper));
+	reaper->id = 42;
 	point_to_hourglass = initialize_hourglass(point_to_hourglass);
 	table = initialization_step(ac, av, table, point_to_hourglass);
 	reaper->philosophers = table;
