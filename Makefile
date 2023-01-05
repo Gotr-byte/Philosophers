@@ -5,7 +5,7 @@ SRCFILES := ./src/philosophers.c \
 			./src/manage_threads.c \
 			./src/release_list.c\
 			./src/check_input.c\
-			./src/routines.c\
+			./src/routines_rev.c\
 			./src/subroutines.c\
 			./src/get_time.c\
 			./src/single_philosopher.c\

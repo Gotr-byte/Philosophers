@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:47:12 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 18:30:04 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:52:40 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,26 @@ int	have_all_eaten(t_philosopher **table)
 		return (0);
 	pthread_mutex_unlock(&checker->eaten_full_mutex);
 	return (1);
+}
+
+void	eating_safeguard(t_philosopher **recieve)
+{
+	t_philosopher	*philosopher;
+
+	philosopher = *recieve;
+	pthread_mutex_lock(&philosopher->hourglass->print_guard_mutex);
+	if (philosopher->hourglass->end == END)
+	{
+		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
+		pthread_mutex_unlock(&philosopher->next->fork);
+		pthread_mutex_unlock(&philosopher->fork);
+		pthread_exit(NULL);
+	}
+	else
+	{
+		printf("%ld %d has taken a fork\n%ld %d is eating\n", \
+		get_time() - philosopher->zero_time, philosopher->nb, \
+		get_time() - philosopher->zero_time, philosopher->nb);
+		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
+	}
 }

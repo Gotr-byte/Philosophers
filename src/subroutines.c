@@ -6,33 +6,11 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 18:47:46 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:32:23 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-void	eating_safeguard(t_philosopher **recieve)
-{
-	t_philosopher	*philosopher;
-
-	philosopher = *recieve;
-	pthread_mutex_lock(&philosopher->hourglass->print_guard_mutex);
-	if (philosopher->hourglass->end == END)
-	{
-		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
-		pthread_mutex_unlock(&philosopher->next->fork);
-		pthread_mutex_unlock(&philosopher->fork);
-		pthread_exit(NULL);
-	}
-	else
-	{
-		printf("%ld %d has taken a fork\n%ld %d is eating\n", \
-		get_time() - philosopher->zero_time, philosopher->nb, \
-		get_time() - philosopher->zero_time, philosopher->nb);
-		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
-	}
-}
 
 void	eating(t_philosopher **arg)
 {
@@ -64,17 +42,19 @@ void	sleeping(t_philosopher **arg)
 		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
 		pthread_exit(NULL);
 	}
-	pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
-	printf("%ld %d is sleeping\n", \
-	get_time() - philosopher->zero_time, \
-	philosopher->nb);
-	philosopher_sleep (&philosopher, target_sleep_time);
+	else
+	{
+		printf("%ld %d is sleeping\n", \
+		get_time() - philosopher->zero_time, \
+		philosopher->nb);
+		pthread_mutex_unlock(&philosopher->hourglass->print_guard_mutex);
+		philosopher_sleep (&philosopher, target_sleep_time);	
+	}
 }
 
 void	thinking(t_philosopher **arg)
 {
 	t_philosopher	*philosopher;
-
 
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->hourglass->print_guard_mutex);
