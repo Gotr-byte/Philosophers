@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:47:12 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 17:56:31 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:30:04 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ void	print_safeguard(t_philosopher **philosopher_struct)
 		pthread_exit(NULL);
 	}
 	else
+	{
+		printf("%ld %d has taken a fork\n", \
+		get_time() - philosopher_local->zero_time, \
+		philosopher_local->nb);
 		pthread_mutex_unlock(&philosopher_local->hourglass->print_guard_mutex);
+	}
 }
 
 int	have_all_eaten(t_philosopher **table)

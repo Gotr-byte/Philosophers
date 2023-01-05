@@ -6,15 +6,11 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 15:37:10 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:25:12 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Needs a function to check if everyone has eaten.
-*/
 #include "../includes/philosophers.h"
-
 
 /*Needs a function that checks if any are alive. May make a lite version.
 Needs a way to traverse all of the elements of an array. Maybe add a value

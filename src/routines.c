@@ -6,11 +6,12 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 17:40:29 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:24:06 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
 void	start_offset(t_philosopher **recieve)
 {
 	t_philosopher	*philosopher;
@@ -53,8 +54,6 @@ void	*living(void *arg)
 	}
 	return (NULL);
 }
-
-
 
 /*Discovered that the horglass doest check if the philosophers are dead all 
 of the time. Need to change the way the list is beeing traversed. Maybe with

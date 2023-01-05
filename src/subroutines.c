@@ -6,11 +6,12 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:50:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 17:57:20 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:29:41 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
 
 void	eating(t_philosopher **arg)
 {
@@ -19,9 +20,6 @@ void	eating(t_philosopher **arg)
 	philosopher = *arg;
 	pthread_mutex_lock(&philosopher->fork);
 	print_safeguard(&philosopher);
-	printf("%ld %d has taken a fork\n", \
-	get_time() - philosopher->zero_time, \
-	philosopher->nb);
 	pthread_mutex_lock(&philosopher->next->fork);
 	pthread_mutex_lock(&philosopher->last_eaten_mutex);
 	philosopher->last_eaten = get_time();
