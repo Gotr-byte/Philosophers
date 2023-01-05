@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/03 20:50:52 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:13:49 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,17 @@ the number of philosophers in the hourglass struct*/
 void	*hourglass(void *timer)
 {
 	t_timer	*sands;
+	int		check_times;
 
 	sands = timer;
 	while (TRUE)
 	{
+		check_times = sands->philosophers->number_of_philosophers;
 		pthread_mutex_lock(&sands->hourglass->full_philosophers_mutex);
 		if (sands->philosophers->number_of_philosophers == sands->hourglass->number_of_full_philosophers)
 			pthread_exit(NULL) ;
 		pthread_mutex_unlock(&sands->hourglass->full_philosophers_mutex);
-		while (sands->philosophers->indicator != LAST)
+		while (check_times)
 		{
 			pthread_mutex_lock(&sands->philosophers->last_eaten_mutex);
 			if (get_time() - sands->philosophers->last_eaten >= sands->philosophers->time_to_die_set && sands->philosophers->eaten_full_value == NOT_EATEN_FULL)
@@ -75,24 +77,25 @@ void	*hourglass(void *timer)
 				pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
 				sands->philosophers = sands->philosophers->next;
 			}
+			check_times--;
 		}
-		pthread_mutex_lock(&sands->philosophers->last_eaten_mutex);
-		if (get_time() - sands->philosophers->last_eaten >= sands->philosophers->time_to_die_set && sands->philosophers->eaten_full_value == NOT_EATEN_FULL)
-		{
-			pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
-			pthread_mutex_lock(&sands->hourglass->print_guard_mutex);
-			sands->hourglass->end = END;
-			pthread_mutex_unlock(&sands->hourglass->print_guard_mutex);
-			printf("%ld %d has died\n", \
-			get_time() - sands->philosophers->hourglass_zero_time, \
-			sands->philosophers->nb);
-			pthread_exit(NULL) ;
-		}
-		else
-		{
-			pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
-			sands->philosophers = sands->philosophers->next;
-		}
+		// pthread_mutex_lock(&sands->philosophers->last_eaten_mutex);
+		// if (get_time() - sands->philosophers->last_eaten >= sands->philosophers->time_to_die_set && sands->philosophers->eaten_full_value == NOT_EATEN_FULL)
+		// {
+		// 	pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
+		// 	pthread_mutex_lock(&sands->hourglass->print_guard_mutex);
+		// 	sands->hourglass->end = END;
+		// 	pthread_mutex_unlock(&sands->hourglass->print_guard_mutex);
+		// 	printf("%ld %d has died\n", 
+		// 	get_time() - sands->philosophers->hourglass_zero_time, 
+		// 	sands->philosophers->nb);
+		// 	pthread_exit(NULL) ;
+		// }
+		// else
+		// {
+		// 	pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
+		// 	sands->philosophers = sands->philosophers->next;
+		// }
 		usleep (1000);
 	}
 }
