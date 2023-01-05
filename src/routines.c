@@ -6,11 +6,23 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 18:37:16 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 16:47:01 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:40:29 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+void	start_offset(t_philosopher **recieve)
+{
+	t_philosopher	*philosopher;
+
+	philosopher = *recieve;
+	while(philosopher->start == 0 && get_time() <= philosopher->zero_time){}
+	if (philosopher->start == 0 && philosopher->nb % 2 != 0)
+	{
+		usleep(1250);
+		philosopher->start = 1;
+	}
+}
 
 void	*living(void *arg)
 {
@@ -18,13 +30,7 @@ void	*living(void *arg)
 	int				has_eaten;
 
 	philosopher = (t_philosopher *)arg;
-	while(philosopher->start == 0 && get_time() <= philosopher->zero_time)
-	{}
-	if (philosopher->start == 0 && philosopher->nb % 2 != 0)
-	{
-		usleep(1250);
-		philosopher->start = 1;
-	}
+	start_offset(&philosopher);
 	has_eaten = 0;
 	while (TRUE)
 	{
@@ -59,7 +65,6 @@ void	*hourglass(void *timer)
 	int		check_times;
 
 	sands = timer;
-	printf ("current time: %ld, start time: %ld \n",get_time(), sands->philosophers->hourglass_zero_time);
 	while(get_time() <= sands->hourglass->hourglass_zero_time){}
 	while (TRUE)
 	{

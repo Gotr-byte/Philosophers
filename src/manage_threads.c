@@ -6,20 +6,19 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 16:26:58 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:58:00 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	weave_threads(t_philosopher **lst)
+void	get_values(t_philosopher **lst)
 {
-	t_philosopher	*last;
+	t_philosopher *last;
 	long			start_time;
-
-	start_time = get_time() + 5000;
-	printf("start time equals %ld\n",start_time);
+	
 	last = *lst;
+	start_time = get_time() + 5000;
 	while (last->indicator != LAST)
 	{
 		last->zero_time = start_time;
@@ -36,6 +35,13 @@ void	weave_threads(t_philosopher **lst)
 	last->last_eaten = start_time;
 	last->start = 0;
 	last->hourglass->start = 0;
+}
+
+void	weave_threads(t_philosopher **lst)
+{
+	t_philosopher	*last;
+
+	get_values(lst);
 	last = *lst;
 	while (last->indicator != LAST)
 	{

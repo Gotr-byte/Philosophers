@@ -6,11 +6,32 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:47:12 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/04 17:18:06 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:56:31 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+void	befork_safeguard(t_philosopher **philosopher_struct)
+{
+	t_philosopher	*philosopher_local;
+
+	philosopher_local = *philosopher_struct;
+	pthread_mutex_lock(&philosopher_local->hourglass->print_guard_mutex);
+	if (philosopher_local->hourglass->end == END)
+	{
+		pthread_mutex_unlock(&philosopher_local->hourglass->print_guard_mutex);
+		pthread_mutex_unlock(&philosopher_local->fork);
+		pthread_exit(NULL);
+	}
+	else
+	{
+		printf("%ld %d has taken a fork\n", \
+		get_time() - philosopher_local->zero_time, \
+		philosopher_local->nb);
+		pthread_mutex_unlock(&philosopher_local->hourglass->print_guard_mutex);
+	}
+}
 
 void	print_safeguard(t_philosopher **philosopher_struct)
 {
@@ -21,6 +42,7 @@ void	print_safeguard(t_philosopher **philosopher_struct)
 	if (philosopher_local->hourglass->end == END)
 	{
 		pthread_mutex_unlock(&philosopher_local->hourglass->print_guard_mutex);
+		pthread_mutex_unlock(&philosopher_local->fork);
 		pthread_exit(NULL);
 	}
 	else
