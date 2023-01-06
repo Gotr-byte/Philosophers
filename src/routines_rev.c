@@ -6,11 +6,28 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:20:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 19:57:23 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:36:01 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+void	ende(t_timer **recieve)
+{
+	t_timer	*ende;
+	int		number_checked;
+
+	ende = *recieve;
+	number_checked = ende->philosophers->number_of_philosophers;
+	while (number_checked > 0)
+	{
+		pthread_mutex_lock(&ende->philosophers->end_mutex);
+		ende->philosophers->end = END;
+		pthread_mutex_unlock(&ende->philosophers->end_mutex);
+		ende->philosophers = ende->philosophers->next;
+		number_checked--;
+	}
+}
 
 void	start_offset(t_philosopher **recieve)
 {
@@ -48,6 +65,8 @@ void	have_they_consumed(t_philosopher **recieve, int has_consumed)
 	}
 }
 
+
+
 void	*living(void *arg)
 {
 	t_philosopher	*philosopher;
@@ -58,6 +77,14 @@ void	*living(void *arg)
 	has_eaten = 0;
 	while (TRUE)
 	{
+		// pthread_mutex_lock(&philosopher->end_mutex);
+		// if(philosopher->end == END)
+		// {
+		// 	printf("THE END HAS COME\n");
+		// 	printf("To philosopher: %d\n", philosopher->nb);
+		// }
+		// pthread_mutex_unlock(&philosopher->end_mutex);
+		the_end(&philosopher);
 		eating(&philosopher);
 		has_eaten++;
 		have_they_consumed(&philosopher, has_eaten);
@@ -78,9 +105,11 @@ static void	did_one_die(t_timer **recieve)
 	sands->philosophers->eaten_full_value == NOT_EATEN_FULL)
 	{
 		pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
-		pthread_mutex_lock(&sands->hourglass->print_guard_mutex);
-		sands->hourglass->end = END;
-		pthread_mutex_unlock(&sands->hourglass->print_guard_mutex);
+		// pthread_mutex_lock(&sands->philosophers->end_mutex);
+		// sands->philosophers->end = END;
+		ende(&sands);
+		printf("THIS WORKS NOW\n");
+		// pthread_mutex_unlock(&sands->philosophers->end_mutex);
 		printf("%ld %d died\n", \
 		get_time() - sands->philosophers->hourglass_zero_time, \
 		sands->philosophers->nb);
