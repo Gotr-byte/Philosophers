@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 16:14:41 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/06 14:36:37 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_philosopher	*ft_lstnew_int(char **av, int content, t_hourglass **recieve)
 	if (tmp)
 	{
 		tmp->nb = content;
+		tmp->end = NOT_END;
 		tmp->number_of_philosophers = ft_atoi_t(av[1]);
 		tmp->time_to_die_set = ft_atoi_t(av[2]);
 		tmp->gorge_time = ft_atoi_t(av[3]);

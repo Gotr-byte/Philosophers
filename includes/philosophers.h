@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 18:56:21 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:19:12 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ typedef struct s_hourglass
 	long			hourglass_zero_time;
 	int				start;
 	pthread_mutex_t	full_philosophers_mutex;
-	pthread_mutex_t	print_guard_mutex;
+	// pthread_mutex_t	print_guard_mutex;
 }t_hourglass;
 
 typedef struct s_philo
 {
 	pthread_t			pt_id;
 	int					nb;
+	int					end;
 	int					start;
 	int					number_of_philosophers;
 	int					gorge_time;
@@ -106,4 +107,5 @@ int					have_all_eaten(t_philosopher **table);
 void				befork_safeguard(t_philosopher **philosopher_struct);
 void				get_values(t_philosopher **lst);
 void				eating_safeguard(t_philosopher **recieve);
+void				the_end(t_philosopher	**recieve);
 #endif
