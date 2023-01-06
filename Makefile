@@ -1,4 +1,4 @@
-NAME := philo_one
+NAME := philosophers
 SRCFILES := ./src/philosophers.c \
 			./src/reading_arguments.c \
 			./src/create_list.c \
@@ -15,9 +15,7 @@ SRCFILES := ./src/philosophers.c \
 			./src/ends.c
 
 CC = cc
-#CFLAGS = -Wextra -Werror -Wall -pthread -fsanitize=thread
-# CFLAGS = -Wextra -Werror -Wall -g -pthread
- CFLAGS = -Wextra -Werror -Wall -pthread
+CFLAGS = -Wextra -Werror -Wall -pthread
 OBJS := $(SRCFILES:.c=.o) 
 
 all: $(NAME)
