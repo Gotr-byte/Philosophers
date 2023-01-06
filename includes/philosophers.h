@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 16:19:12 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:36:47 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ typedef struct s_philo
 	long				hourglass_zero_time;
 	int					eat_times;
 	int					eaten_full_value;
+	int					number_of_full_philosophers;
 	pthread_mutex_t		last_eaten_mutex;	
 	pthread_mutex_t		fork;
 	pthread_mutex_t		eaten_full_mutex;
 	pthread_mutex_t		end_mutex;
 	struct s_philo		*next;
 	struct s_hourglass	*hourglass;
+	struct s_timer		*timer;
 }t_philosopher;
 
 typedef struct s_timer
@@ -70,6 +72,8 @@ typedef struct s_timer
 	pthread_t			id;
 	t_philosopher		*philosophers;
 	t_hourglass			*hourglass;
+	int					number_of_full_philosophers_in_timer;
+	pthread_mutex_t		full_philosophers_mutex_in_timer;
 }t_timer;
 
 void				free_lst(t_philosopher	*head);
@@ -103,7 +107,7 @@ int					single_philosopher(char **av);
 t_philosopher		*initialization_step(int ac, char **av, \
 t_philosopher *table, t_hourglass *point_to_hourglass);
 t_hourglass			*initialize_hourglass(t_hourglass *point_to_hourglass);
-int					have_all_eaten(t_philosopher **table);
+void				have_all_eaten(t_timer **table);
 void				befork_safeguard(t_philosopher **philosopher_struct);
 void				get_values(t_philosopher **lst);
 void				eating_safeguard(t_philosopher **recieve);

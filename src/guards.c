@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:47:12 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 16:14:44 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/06 19:27:53 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,25 @@ void	print_safeguard(t_philosopher **philosopher_struct)
 	}
 }
 
-int	have_all_eaten(t_philosopher **table)
-{
-	t_philosopher	*checker;
+// int	have_all_eaten(t_philosopher **table)
+// {
+// 	t_philosopher	*checker;
 
-	checker = *table;
-	while (checker->indicator != LAST)
-	{
-		pthread_mutex_lock(&checker->eaten_full_mutex);
-		if (checker->eaten_full_value == 0)
-			return (0);
-		pthread_mutex_unlock(&checker->eaten_full_mutex);
-		checker = checker->next;
-	}
-	pthread_mutex_lock(&checker->eaten_full_mutex);
-	if (checker->eaten_full_value == 0)
-		return (0);
-	pthread_mutex_unlock(&checker->eaten_full_mutex);
-	return (1);
-}
+// 	checker = *table;
+// 	while (checker->indicator != LAST)
+// 	{
+// 		pthread_mutex_lock(&checker->eaten_full_mutex);
+// 		if (checker->eaten_full_value == 0)
+// 			return (0);
+// 		pthread_mutex_unlock(&checker->eaten_full_mutex);
+// 		checker = checker->next;
+// 	}
+// 	pthread_mutex_lock(&checker->eaten_full_mutex);
+// 	if (checker->eaten_full_value == 0)
+// 		return (0);
+// 	pthread_mutex_unlock(&checker->eaten_full_mutex);
+// 	return (1);
+// }
 
 void	eating_safeguard(t_philosopher **recieve)
 {
