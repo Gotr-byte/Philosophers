@@ -22,6 +22,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(SRCFILES) $(LIBFT_EXEC) -o $(NAME) 
+clean:
 	rm -f $(OBJS)
 fclean:	clean
 	rm -f $(NAME)
