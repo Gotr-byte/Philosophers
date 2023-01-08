@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:16:34 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 16:51:00 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:22:18 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	get_values(t_philosopher **lst)
 	traverse = last->number_of_philosophers;
 	start_time = get_time() + 5000;
 	last->timer->timer_zero_time = start_time;
-	// last->hourglass_zero_time = start_time;
 	while (traverse > 0)
 	{
 		last->zero_time = start_time;
