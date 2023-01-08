@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:20:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 21:04:32 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:49:06 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	did_one_die(t_timer **recieve)
 		pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
 		ende(&sands);
 		printf("%ld %d died\n", \
-		get_time() - sands->philosophers->hourglass_zero_time, \
+		get_time() - sands->timer_zero_time, \
 		sands->philosophers->nb);
 		pthread_exit(NULL);
 	}
@@ -94,7 +94,7 @@ void	*hourglass(void *timer)
 	int		number_of_philos_eaten_full;
 
 	sands = timer;
-	while (get_time() <= sands->hourglass->hourglass_zero_time)
+	while (get_time() <= sands->timer_zero_time)
 		usleep(1);
 	while (TRUE)
 	{

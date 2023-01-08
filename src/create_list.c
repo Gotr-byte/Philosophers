@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:25:29 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 14:36:37 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:36:56 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	local_lstadd_back(t_philosopher **lst, t_philosopher *new)
 	return ;
 }
 
-t_philosopher	*ft_lstnew_int(char **av, int content, t_hourglass **recieve)
+t_philosopher	*ft_lstnew_int(char **av, int content, t_hourglass **recieve, t_timer *timer)
 {
 	t_philosopher	*tmp;
 	t_hourglass		*point_to_hourglass;
@@ -75,6 +75,7 @@ t_philosopher	*ft_lstnew_int(char **av, int content, t_hourglass **recieve)
 		tmp->eaten_full_value = NOT_EATEN_FULL;
 		tmp->next = NULL;
 		tmp->hourglass = point_to_hourglass;
+		tmp->timer = timer;
 	}
 	return (tmp);
 }

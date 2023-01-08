@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:29:17 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 16:21:19 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:27:33 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,35 +55,33 @@ void	detach_threads(t_philosopher **lst)
 void	summon_mutexes(t_philosopher **lst)
 {
 	t_philosopher	*last;
+	int				traverse;
 
 	last = *lst;
-	// pthread_mutex_init(&(last->hourglass->full_philosophers_mutex), NULL);
-	while (last->indicator != LAST)
+	traverse = last->number_of_philosophers;
+	while (traverse > 0)
 	{
 		pthread_mutex_init(&(last->fork), NULL);
 		pthread_mutex_init(&(last->last_eaten_mutex), NULL);
 		pthread_mutex_init(&(last->end_mutex), NULL);
 		last = last->next;
+		traverse--;
 	}
-	pthread_mutex_init(&(last->last_eaten_mutex), NULL);
-	pthread_mutex_init(&(last->fork), NULL);
-	pthread_mutex_init(&(last->end_mutex), NULL);
 }
 
 void	expell_mutexes(t_philosopher **lst)
 {
 	t_philosopher	*last;
+	int				traverse;
 
 	last = *lst;
-	// pthread_mutex_destroy(&(last->hourglass->full_philosophers_mutex));
-	while (last->indicator != LAST)
+	traverse = last->number_of_philosophers;
+	while (traverse > 0)
 	{
 		pthread_mutex_destroy(&(last->fork));
 		pthread_mutex_destroy(&(last->last_eaten_mutex));
 		pthread_mutex_destroy(&last->end_mutex);
 		last = last->next;
+		traverse--;
 	}
-	pthread_mutex_destroy(&last->end_mutex);
-	pthread_mutex_destroy(&(last->fork));
-	pthread_mutex_destroy(&(last->last_eaten_mutex));
 }
