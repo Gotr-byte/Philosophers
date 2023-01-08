@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 10:30:01 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 21:08:22 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:13:21 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ int	main(int ac, char **av)
 	point_to_hourglass = initialize_hourglass(point_to_hourglass);
 	table = initialization_step(ac, av, table, point_to_hourglass);
 	reaper_init(reaper, table, point_to_hourglass);
-	pthread_mutex_init(&reaper->full_philosophers_mutex_in_timer, NULL);
 	weave_threads(&table);
 	pthread_create(&reaper->id, NULL, hourglass, reaper);
 	pthread_join(reaper->id, NULL);
 	join_threads(&table);
 	expell_mutexes(&table);
-	pthread_mutex_destroy(&reaper->full_philosophers_mutex_in_timer);
 	release_list(&table, point_to_hourglass, reaper);
 	return (0);
 }

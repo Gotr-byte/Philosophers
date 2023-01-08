@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 21:03:17 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 16:21:54 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@
 
 typedef struct s_hourglass
 {
-	int				end;
 	int				number_of_full_philosophers;
 	long			hourglass_zero_time;
+	// pthread_mutex_t	full_philosophers_mutex;
 	int				start;
-	pthread_mutex_t	full_philosophers_mutex;
 }t_hourglass;
 
 typedef struct s_philo
@@ -72,7 +71,6 @@ typedef struct s_timer
 	t_philosopher		*philosophers;
 	t_hourglass			*hourglass;
 	int					number_of_full_philosophers_in_timer;
-	pthread_mutex_t		full_philosophers_mutex_in_timer;
 }t_timer;
 
 void				free_lst(t_philosopher	*head);
