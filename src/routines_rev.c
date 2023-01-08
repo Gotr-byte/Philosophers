@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:20:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 20:25:18 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 20:37:23 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	start_offset(t_philosopher **recieve)
 	}
 	if (philosopher->start == 0 && philosopher->nb % 2 != 0)
 	{
-		usleep(250);
+		usleep(1250);
 		philosopher->start = 1;
 	}
 }
