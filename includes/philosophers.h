@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/06 21:03:17 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:57:38 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@
 
 typedef struct s_hourglass
 {
-	int				end;
 	int				number_of_full_philosophers;
-	long			hourglass_zero_time;
-	int				start;
-	pthread_mutex_t	full_philosophers_mutex;
 }t_hourglass;
 
 typedef struct s_philo
@@ -49,11 +45,9 @@ typedef struct s_philo
 	int					number_of_philosophers;
 	int					gorge_time;
 	int					sleep_time_set;
-	int					time_to_die_set;
 	int					indicator;
 	long				last_eaten;
 	long				zero_time;
-	long				hourglass_zero_time;
 	int					eat_times;
 	int					eaten_full_value;
 	int					number_of_full_philosophers;
@@ -62,7 +56,6 @@ typedef struct s_philo
 	pthread_mutex_t		eaten_full_mutex;
 	pthread_mutex_t		end_mutex;
 	struct s_philo		*next;
-	struct s_hourglass	*hourglass;
 	struct s_timer		*timer;
 }t_philosopher;
 
@@ -70,16 +63,16 @@ typedef struct s_timer
 {
 	pthread_t			id;
 	t_philosopher		*philosophers;
-	t_hourglass			*hourglass;
-	int					number_of_full_philosophers_in_timer;
-	pthread_mutex_t		full_philosophers_mutex_in_timer;
+	long				timer_zero_time;
+	int					time_to_die;
+	int					number_of_philosophers_in_timer;
 }t_timer;
 
 void				free_lst(t_philosopher	*head);
 unsigned long long	ft_atoi_t(const char *str);
 void				*ft_calloc(size_t count, size_t size);
 t_philosopher		*ft_lstnew_int(char **av, \
-int content, t_hourglass **recieve);
+int content, t_timer *timer);
 void				local_lstadd_back(t_philosopher **lst, t_philosopher *new);
 void				last_point_first(t_philosopher **lst);
 void				traverse_table(t_philosopher **lst, long curr_time);
@@ -87,8 +80,7 @@ void				expell_mutexes(t_philosopher **lst);
 void				summon_mutexes(t_philosopher **lst);
 void				join_threads(t_philosopher **lst);
 void				weave_threads(t_philosopher **lst);
-void				release_list(t_philosopher **lst, \
-t_hourglass *release, t_timer *reaper);
+void				release_list(t_philosopher **lst, t_timer *reaper);
 void				*living(void *arg);
 void				detach_threads(t_philosopher **lst);
 long				get_time(void);
@@ -104,7 +96,7 @@ void				philosopher_do(t_philosopher **philosopher);
 void				philosopher_sleep(t_philosopher **philosopher, long x_time);
 int					single_philosopher(char **av);
 t_philosopher		*initialization_step(int ac, char **av, \
-t_philosopher *table, t_hourglass *point_to_hourglass);
+t_philosopher *table, t_timer *timer);
 t_hourglass			*initialize_hourglass(t_hourglass *point_to_hourglass);
 void				have_all_eaten(t_timer **table);
 void				befork_safeguard(t_philosopher **philosopher_struct);

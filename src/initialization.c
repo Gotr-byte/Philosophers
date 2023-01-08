@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:49:46 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/05 16:02:35 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:28:36 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,18 @@ t_hourglass	*initialize_hourglass(t_hourglass *point_to_hourglass)
 {
 	point_to_hourglass = NULL;
 	point_to_hourglass = ft_calloc(1, sizeof(t_hourglass));
-	point_to_hourglass->end = NOT_END;
-	point_to_hourglass->number_of_full_philosophers = 0;
 	return (point_to_hourglass);
 }
 
 t_philosopher	*initialization_step(int ac, char **av, \
-t_philosopher *table, t_hourglass *point_to_hourglass)
+t_philosopher *table, t_timer *timer)
 {
 	long long unsigned int	i;
 
 	i = 1;
 	while (i <= ft_atoi_t(av[1]))
 	{
-		local_lstadd_back(&table, ft_lstnew_int(av, i, &point_to_hourglass));
+		local_lstadd_back(&table, ft_lstnew_int(av, i, timer));
 		i++;
 	}
 	if (ac == 6)
