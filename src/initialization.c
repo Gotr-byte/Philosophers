@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:49:46 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 18:27:37 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:28:36 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_philosopher *table, t_timer *timer)
 	i = 1;
 	while (i <= ft_atoi_t(av[1]))
 	{
-		local_lstadd_back(&table, ft_lstnew_int(av, i,  timer));
+		local_lstadd_back(&table, ft_lstnew_int(av, i, timer));
 		i++;
 	}
 	if (ac == 6)

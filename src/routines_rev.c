@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:20:11 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 16:49:06 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 20:25:18 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	start_offset(t_philosopher **recieve)
 	}
 	if (philosopher->start == 0 && philosopher->nb % 2 != 0)
 	{
-		usleep(1250);
+		usleep(250);
 		philosopher->start = 1;
 	}
 }
@@ -70,7 +70,7 @@ static void	did_one_die(t_timer **recieve)
 	sands = *recieve;
 	pthread_mutex_lock(&sands->philosophers->last_eaten_mutex);
 	if (get_time() - sands->philosophers->last_eaten >= \
-	sands->philosophers->time_to_die_set && \
+	sands->time_to_die && \
 	sands->philosophers->eaten_full_value == NOT_EATEN_FULL)
 	{
 		pthread_mutex_unlock(&sands->philosophers->last_eaten_mutex);
@@ -103,15 +103,15 @@ void	*hourglass(void *timer)
 		while (check_times > 0)
 		{
 			did_one_die(&sands);
+			pthread_mutex_lock(&sands->philosophers->eaten_full_mutex);
 			if (sands->philosophers->eaten_full_value == 1)
 				number_of_philos_eaten_full++;
-			pthread_mutex_lock(&sands->philosophers->eaten_full_mutex);
-			if (sands->philosophers->number_of_philosophers == \
+			pthread_mutex_unlock(&sands->philosophers->eaten_full_mutex);
+			if (sands->number_of_philosophers_in_timer == \
 			number_of_philos_eaten_full)
 				eating_ende(&sands);
-			pthread_mutex_unlock(&sands->philosophers->eaten_full_mutex);
 			check_times--;
 		}
-		usleep (2000);
+		usleep (8000);
 	}
 }

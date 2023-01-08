@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 18:27:50 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/08 19:57:38 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_philo
 	int					number_of_philosophers;
 	int					gorge_time;
 	int					sleep_time_set;
-	int					time_to_die_set;
 	int					indicator;
 	long				last_eaten;
 	long				zero_time;
@@ -57,7 +56,6 @@ typedef struct s_philo
 	pthread_mutex_t		eaten_full_mutex;
 	pthread_mutex_t		end_mutex;
 	struct s_philo		*next;
-	struct s_hourglass	*hourglass;
 	struct s_timer		*timer;
 }t_philosopher;
 
@@ -65,9 +63,9 @@ typedef struct s_timer
 {
 	pthread_t			id;
 	t_philosopher		*philosophers;
-	t_hourglass			*hourglass;
 	long				timer_zero_time;
-	int					number_of_full_philosophers_in_timer;
+	int					time_to_die;
+	int					number_of_philosophers_in_timer;
 }t_timer;
 
 void				free_lst(t_philosopher	*head);
@@ -82,8 +80,7 @@ void				expell_mutexes(t_philosopher **lst);
 void				summon_mutexes(t_philosopher **lst);
 void				join_threads(t_philosopher **lst);
 void				weave_threads(t_philosopher **lst);
-void				release_list(t_philosopher **lst, \
-t_hourglass *release, t_timer *reaper);
+void				release_list(t_philosopher **lst, t_timer *reaper);
 void				*living(void *arg);
 void				detach_threads(t_philosopher **lst);
 long				get_time(void);

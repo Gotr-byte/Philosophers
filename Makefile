@@ -16,6 +16,7 @@ SRCFILES := ./src/philosophers.c \
 
 CC = cc
 CFLAGS = -Wextra -Werror -Wall -pthread
+# CFLAGS = -Wextra -Werror -Wall -pthread -g -fsanitize=thread
 # CFLAGS = -Wextra -Werror -Wall -pthread -g -fsanitize=address
 OBJS := $(SRCFILES:.c=.o) 
 
