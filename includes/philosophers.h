@@ -6,7 +6,7 @@
 /*   By: pbiederm <pbiederm@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 17:33:53 by pbiederm          #+#    #+#             */
-/*   Updated: 2023/01/08 19:57:38 by pbiederm         ###   ########.fr       */
+/*   Updated: 2023/01/10 14:44:13 by pbiederm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@
 # define NOT_EATEN_FULL 0
 # define EATEN_FULL 1
 # define SET_SCOPE 4294967295
-
-typedef struct s_hourglass
-{
-	int				number_of_full_philosophers;
-}t_hourglass;
 
 typedef struct s_philo
 {
@@ -97,7 +92,6 @@ void				philosopher_sleep(t_philosopher **philosopher, long x_time);
 int					single_philosopher(char **av);
 t_philosopher		*initialization_step(int ac, char **av, \
 t_philosopher *table, t_timer *timer);
-t_hourglass			*initialize_hourglass(t_hourglass *point_to_hourglass);
 void				have_all_eaten(t_timer **table);
 void				befork_safeguard(t_philosopher **philosopher_struct);
 void				get_values(t_philosopher **lst);
